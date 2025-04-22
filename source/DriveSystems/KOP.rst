@@ -20,7 +20,7 @@ Software Installation:
     TalonFX (Kraken):
         Software VendorDeps: Phoneix 6
 
-.. attention:: 
+.. note:: 
     You don't need to type out the entire name—just start typing, wait for the recommended words to appear, and hit Enter to fill it out and auto imported when needed.
 
 .. tabs::
@@ -193,6 +193,9 @@ After completing the chassis, we need a command to drive it.
 
 .. tip:: 
     It's recommended to write your own drive method instead of using the official one, as it offers more flexibility and extensibility for your drive system.
+.. warning:: 
+    Make sure to use either the official drive method or your own properly written one; otherwise, it could cause runtime errors.
+
 
 Using a NEO motor chassis as an example:
 
@@ -209,3 +212,4 @@ Using a NEO motor chassis as an example:
                     RightMotor.set(speed-rotation);
                 }
             }
+

@@ -9,12 +9,12 @@
 project = 'FRC8569'
 copyright = '2025, Justmore5mins FRC8569'
 author = 'Justmore5mins'
-release = '0.0.1'
+release = ''
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx_tabs.tabs',"sphinx_design"]
+extensions = ['sphinx_tabs.tabs',"sphinx_design",'sphinx.ext.autosectionlabel']
 
 templates_path = ['_templates']
 exclude_patterns = []
