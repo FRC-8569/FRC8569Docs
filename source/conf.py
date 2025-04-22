@@ -14,7 +14,7 @@ release = '0.0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['sphinx_tabs.tabs',"sphinx_design"]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -25,12 +25,6 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 html_permalinks_icon = '<span>#</span>'
 html_theme = 'sphinxawesome_theme'
-
-html_theme_options = {
-    "collapse_navigation": True,
-    "navigation_depth": 4,
-    "titles_only": False
-}
-
+pygments_style = 'xcode'
 
 html_static_path = ['_static']
