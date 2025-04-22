@@ -1,8 +1,3 @@
-.. FRC8569Docs documentation master file, created by
-   sphinx-quickstart on Sun Apr 20 21:48:00 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome To The FRC8569 Documentations
 =========================
 
