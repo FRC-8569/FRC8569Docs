@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'FRC8569Docs'
-copyright = '2025, Justmore5mins'
+project = 'FRC8569'
+copyright = '2025, Justmore5mins FRC8569'
 author = 'Justmore5mins'
 release = '0.0.1'
 
@@ -23,8 +23,9 @@ exclude_patterns = []
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+html_permalinks_icon = '<span>#</span>'
+html_theme = 'sphinxawesome_theme'
 
-html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     "collapse_navigation": True,
     "navigation_depth": 4,
