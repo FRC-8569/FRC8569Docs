@@ -106,6 +106,8 @@
 <p>The swerve chassis is one of the most advanced drivetrains in FRC, offering exceptional speed, power, and maneuverability, which is why it’s commonly used by top-tier teams. However, it requires the most tuning and debugging to achieve optimal performance.</p>
 <p>Swerve chassis image below:</p>
 <img alt="Swerve Chassis Image" src="https://www.chiefdelphi.com/uploads/default/98c9352ca78c34dfdc08f8b46b30b17e24915dd6"/>
+<p>and its kinematics</p>
+<img alt="Swerve Drive Kinematics Image" src="https://compendium.readthedocs.io/en/latest/_images/swerve.png"/>
 <section id="swerve-chassis-dependices">
 <h2>Swerve Chassis Dependices<a class="headerlink" href="#swerve-chassis-dependices" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#swerve-chassis-dependices'"><span>#</span></a></h2>
 <div class="line-block">
@@ -116,6 +118,10 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you use all CTRE products (kraken motor, cancoder, pigeon), you can unlock hidden feature called Swerve Project Generator in Phoenix Tuner X</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Swerve drive code is more complex compared to the other two chassis types, so here’s a <a class="reference external" href="https://github.com/FRC-8569/SwerveChassisExample">GitHub example</a> to help you get started.</p>
 </div>
 </section>
 <section id="constants-definition">
@@ -153,27 +159,278 @@ or you can check your gyro definition to know your robot facing.</p>
 </span></code></pre></div>
 </div>
 </div></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
 <p>The CANCoder is not always percise for our robot, so we need to calibrate the CANCoder by <a class="reference internal" href="#cancoder-calibration"><span class="std std-ref">CANCoder Calibration</span></a></p>
 </div>
 <section id="module-position-definition">
 <h3>Module Position Definition<a class="headerlink" href="#module-position-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-position-definition'"><span>#</span></a></h3>
 <p>we need to create a SwerveKinematics</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SwerveKinematics</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SwerveKinematics</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="cm">/*                 ^</span>
+</span><span id="line-2"><span class="cm">|&lt;-----WIDTH------&gt;|</span>
+</span><span id="line-3"><span class="cm">                   |</span>
+</span><span id="line-4"><span class="cm">                 LENGTH</span>
+</span><span id="line-5"><span class="cm">                   |</span>
+</span><span id="line-6"><span class="cm">                   |</span>
+</span><span id="line-7"><span class="cm">                   ^</span>
+</span><span id="line-8"><span class="cm">*/</span>
+</span><span id="line-9"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">SwerveDriveKinematics</span><span class="w"> </span><span class="n">kSwerveKinematics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveDriveKinematics</span><span class="p">(</span>
+</span><span id="line-10"><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Translation2d</span><span class="p">(</span><span class="n">LENGTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="line-11"><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Translation2d</span><span class="p">(</span><span class="n">LENGTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="line-12"><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Translation2d</span><span class="p">(</span><span class="o">-</span><span class="n">LENGTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="line-13"><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Translation2d</span><span class="p">(</span><span class="o">-</span><span class="n">LENGTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="line-14"><span class="p">);</span>
+</span></code></pre></div>
+</div>
+</div></div>
+<p>to tell robot where the module is.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use self-rotation to test whether your location settings are incorrect. Aside from incorrect CANCoder offsets, you can often fix the issue by adjusting the signs (e.g., modifying ‘-’ values).
+If your robot forms an X-shape or rotates in the wrong direction, it’s likely due to incorrect location definitions.</p>
+</div>
+<p>and define other constants we need</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">OtherConstants</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kMaxMotorSpeedRPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5676</span><span class="o">/</span><span class="mi">60</span><span class="p">;</span><span class="w"> </span><span class="c1">//NEO Motor Free Speed</span>
+</span><span id="line-2"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kDrivePositionConversionFactor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kDriveGearRatio</span><span class="o">*</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kWheelDiameter</span><span class="o">*</span><span class="n">Math</span><span class="p">.</span><span class="na">PI</span><span class="p">;</span>
+</span><span id="line-3"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kDriveVelocityConversionFactor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kDrivePositionConversionFactor</span><span class="o">/</span><span class="mi">60</span><span class="p">;</span>
+</span><span id="line-4"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kMotorKv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">476</span><span class="p">;</span><span class="w"> </span><span class="c1">//search from https://docs.revrobotics.com/brushless/neo/v1.1</span>
+</span><span id="line-5"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kMaxRobotSpeedMPS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kMaxMotorSpeedRPS</span><span class="o">/</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kDriveGearRatio</span><span class="o">*</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kWheelDiameter</span><span class="o">*</span><span class="n">Math</span><span class="p">.</span><span class="na">PI</span><span class="p">;</span><span class="w"> </span><span class="c1">//calculate the maximum velocity of the robot</span>
+</span></code></pre></div>
+</div>
+</div></div>
+<p>after finish defining the constants, we can dive into the swerve module programming</p>
+<p><strong>Swerve Moudle Programming</strong></p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-3-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-3-3-0" name="3-0" role="tab" tabindex="0">SparkMax+NEO</button></div><div aria-labelledby="tab-3-3-0" class="sphinx-tabs-panel" id="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix6.configs.CANcoderConfiguration</span><span class="p">;</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix6.hardware.CANcoder</span><span class="p">;</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix6.signals.SensorDirectionValue</span><span class="p">;</span>
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.RelativeEncoder</span><span class="p">;</span>
+</span><span id="line-5"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkClosedLoopController</span><span class="p">;</span>
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkMax</span><span class="p">;</span>
+</span><span id="line-7"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.ControlType</span><span class="p">;</span>
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.PersistMode</span><span class="p">;</span>
+</span><span id="line-9"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.ResetMode</span><span class="p">;</span>
+</span><span id="line-10"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkLowLevel.MotorType</span><span class="p">;</span>
+</span><span id="line-11"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.config.SparkMaxConfig</span><span class="p">;</span>
+</span><span id="line-12"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.config.SparkBaseConfig.IdleMode</span><span class="p">;</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.controller.PIDController</span><span class="p">;</span>
+</span><span id="line-15"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.geometry.Rotation2d</span><span class="p">;</span>
+</span><span id="line-16"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveModulePosition</span><span class="p">;</span>
+</span><span id="line-17"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveModuleState</span><span class="p">;</span>
+</span><span id="line-18"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.ChassisConstants</span><span class="p">;</span>
+</span><span id="line-19"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.MotorConstants</span><span class="p">;</span>
+</span><span id="line-20"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.PIDValues</span><span class="p">;</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SwerveMod</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-23"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">DriveMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RotationMotor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Two motors</span>
+</span><span id="line-24"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">RelativeEncoder</span><span class="w"> </span><span class="n">DriveEncoder</span><span class="p">;</span><span class="w"> </span><span class="c1">// You can get various values from the encoder like velocity, position etc.</span>
+</span><span id="line-25"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">CANcoder</span><span class="w"> </span><span class="n">cancoder</span><span class="p">;</span><span class="w"> </span><span class="c1">//CTRE CANCoder</span>
+</span><span id="line-26"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkClosedLoopController</span><span class="w"> </span><span class="n">DrivePID</span><span class="p">;</span><span class="w"> </span><span class="c1">//Driving PID control for smoothen drive</span>
+</span><span id="line-27"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PIDController</span><span class="w"> </span><span class="n">RotationPID</span><span class="p">;</span><span class="w"> </span><span class="c1">//Rotation PID for facing tuning</span>
+</span><span id="line-28"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">CANcoderConfiguration</span><span class="w"> </span><span class="n">cancoderConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">//CANCoder configuration</span>
+</span><span id="line-29"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="w"> </span><span class="n">Driveconfig</span><span class="p">,</span><span class="w"> </span><span class="n">RotationConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">// Motor Configuration</span>
+</span><span id="line-30">
+</span><span id="line-31">
+</span><span id="line-32"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SwerveMod</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">DriveMotorID</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">RotationMotorID</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CANCoderID</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">CANCoderOffset</span><span class="p">){</span>
+</span><span id="line-33"><span class="w">        </span><span class="c1">//initial the item we just defined</span>
+</span><span id="line-34"><span class="w">        </span><span class="n">DriveMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">DriveMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span>
+</span><span id="line-35"><span class="w">        </span><span class="n">RotationMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">RotationMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span>
+</span><span id="line-36"><span class="w">        </span><span class="n">cancoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CANcoder</span><span class="p">(</span><span class="n">CANCoderID</span><span class="p">);</span>
+</span><span id="line-37">
+</span><span id="line-38"><span class="w">        </span><span class="n">cancoderConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CANcoderConfiguration</span><span class="p">();</span>
+</span><span id="line-39"><span class="w">        </span><span class="n">Driveconfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-40"><span class="w">        </span><span class="n">RotationConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-41">
+</span><span id="line-42"><span class="w">        </span><span class="n">Driveconfig</span>
+</span><span id="line-43"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-44"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span id="line-45"><span class="w">        </span><span class="c1">//closedloop means PID control, not required but you can smoothen your drive when applied.</span>
+</span><span id="line-46"><span class="w">        </span><span class="n">Driveconfig</span><span class="p">.</span><span class="na">closedLoop</span>
+</span><span id="line-47"><span class="w">            </span><span class="p">.</span><span class="na">pidf</span><span class="p">(</span><span class="n">PIDValues</span><span class="p">.</span><span class="na">DrivePID</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">PIDValues</span><span class="p">.</span><span class="na">DrivePID</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">PIDValues</span><span class="p">.</span><span class="na">DrivePID</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">PIDValues</span><span class="p">.</span><span class="na">DrivePID</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">)</span>
+</span><span id="line-48"><span class="w">            </span><span class="p">.</span><span class="na">outputRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="line-49">
+</span><span id="line-50"><span class="w">        </span><span class="c1">//configure the encoder</span>
+</span><span id="line-51"><span class="w">        </span><span class="n">Driveconfig</span><span class="p">.</span><span class="na">encoder</span>
+</span><span id="line-52"><span class="w">            </span><span class="p">.</span><span class="na">positionConversionFactor</span><span class="p">(</span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">kDrivePositionConversionFactor</span><span class="p">)</span>
+</span><span id="line-53"><span class="w">            </span><span class="p">.</span><span class="na">velocityConversionFactor</span><span class="p">(</span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">kDriveVelocityConversionFactor</span><span class="p">);</span>
+</span><span id="line-54">
+</span><span id="line-55"><span class="w">        </span><span class="n">RotationConfig</span>
+</span><span id="line-56"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-57"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span id="line-58"><span class="w">        </span><span class="n">RotationConfig</span><span class="p">.</span><span class="na">encoder</span>
+</span><span id="line-59"><span class="w">            </span><span class="p">.</span><span class="na">positionConversionFactor</span><span class="p">(</span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">kDrivePositionConversionFactor</span><span class="p">)</span>
+</span><span id="line-60"><span class="w">            </span><span class="p">.</span><span class="na">velocityConversionFactor</span><span class="p">(</span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">kDriveVelocityConversionFactor</span><span class="p">);</span>
+</span><span id="line-61">
+</span><span id="line-62"><span class="w">        </span><span class="n">cancoderConfig</span><span class="p">.</span><span class="na">MagnetSensor</span>
+</span><span id="line-63"><span class="w">            </span><span class="p">.</span><span class="na">withSensorDirection</span><span class="p">(</span><span class="n">SensorDirectionValue</span><span class="p">.</span><span class="na">CounterClockwise_Positive</span><span class="p">)</span>
+</span><span id="line-64"><span class="w">            </span><span class="p">.</span><span class="na">withMagnetOffset</span><span class="p">(</span><span class="n">CANCoderOffset</span><span class="p">);</span>
+</span><span id="line-65">
+</span><span id="line-66">
+</span><span id="line-67"><span class="w">        </span><span class="c1">//apply the motor settings to the motor</span>
+</span><span id="line-68"><span class="w">        </span><span class="n">DriveMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">Driveconfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span>
+</span><span id="line-69"><span class="w">        </span><span class="n">RotationMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">RotationConfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span>
+</span><span id="line-70"><span class="w">        </span><span class="n">cancoder</span><span class="p">.</span><span class="na">getConfigurator</span><span class="p">().</span><span class="na">apply</span><span class="p">(</span><span class="n">cancoderConfig</span><span class="p">);</span><span class="w"> </span><span class="c1">//applying settings to CANCoder</span>
+</span><span id="line-71">
+</span><span id="line-72"><span class="w">        </span><span class="n">DriveEncoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriveMotor</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">();</span><span class="c1">//get encoder from motor</span>
+</span><span id="line-73"><span class="w">        </span><span class="n">RotationPID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PIDController</span><span class="p">(</span><span class="n">PIDValues</span><span class="p">.</span><span class="na">RotationPID</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">PIDValues</span><span class="p">.</span><span class="na">RotationPID</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">PIDValues</span><span class="p">.</span><span class="na">RotationPID</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span><span class="c1">//Define a PID controller for rotation</span>
+</span><span id="line-74"><span class="w">        </span><span class="n">DrivePID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriveMotor</span><span class="p">.</span><span class="na">getClosedLoopController</span><span class="p">();</span><span class="c1">// get drive hardware PID controller</span>
+</span><span id="line-75"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-76">
+</span><span id="line-77"><span class="w">    </span><span class="c1">//get the module current state (v, θ) in (m/s, deg)</span>
+</span><span id="line-78"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveModuleState</span><span class="w"> </span><span class="nf">getState</span><span class="p">(){</span>
+</span><span id="line-79"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveModuleState</span><span class="p">(</span>
+</span><span id="line-80"><span class="w">            </span><span class="n">DriveEncoder</span><span class="p">.</span><span class="na">getVelocity</span><span class="p">(),</span>
+</span><span id="line-81"><span class="w">            </span><span class="n">Rotation2d</span><span class="p">.</span><span class="na">fromDegrees</span><span class="p">(</span><span class="n">cancoder</span><span class="p">.</span><span class="na">getPosition</span><span class="p">().</span><span class="na">getValueAsDouble</span><span class="p">())</span>
+</span><span id="line-82"><span class="w">        </span><span class="p">);</span>
+</span><span id="line-83"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-84">
+</span><span id="line-85"><span class="w">    </span><span class="c1">//get the module position for odometry in (p, θ) of (m, deg)</span>
+</span><span id="line-86"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveModulePosition</span><span class="w"> </span><span class="nf">getPosition</span><span class="p">(){</span>
+</span><span id="line-87"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveModulePosition</span><span class="p">(</span>
+</span><span id="line-88"><span class="w">            </span><span class="n">DriveEncoder</span><span class="p">.</span><span class="na">getPosition</span><span class="p">(),</span>
+</span><span id="line-89"><span class="w">            </span><span class="n">Rotation2d</span><span class="p">.</span><span class="na">fromDegrees</span><span class="p">(</span><span class="n">cancoder</span><span class="p">.</span><span class="na">getPosition</span><span class="p">().</span><span class="na">getValueAsDouble</span><span class="p">())</span>
+</span><span id="line-90"><span class="w">        </span><span class="p">);</span>
+</span><span id="line-91"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-92">
+</span><span id="line-93"><span class="w">    </span><span class="c1">//set the module state to the desired state</span>
+</span><span id="line-94"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setState</span><span class="p">(</span><span class="n">SwerveModuleState</span><span class="w"> </span><span class="n">state</span><span class="p">){</span>
+</span><span id="line-95"><span class="w">        </span><span class="n">state</span><span class="p">.</span><span class="na">optimize</span><span class="p">(</span><span class="n">getState</span><span class="p">().</span><span class="na">angle</span><span class="p">);</span>
+</span><span id="line-96"><span class="w">        </span><span class="n">DrivePID</span><span class="p">.</span><span class="na">setReference</span><span class="p">(</span><span class="n">mpsToRPM</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="na">speedMetersPerSecond</span><span class="p">),</span><span class="w"> </span><span class="n">ControlType</span><span class="p">.</span><span class="na">kVelocity</span><span class="p">);</span>
+</span><span id="line-97"><span class="w">        </span><span class="n">RotationMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span>
+</span><span id="line-98"><span class="w">            </span><span class="n">RotationPID</span><span class="p">.</span><span class="na">calculate</span><span class="p">(</span>
+</span><span id="line-99"><span class="w">                </span><span class="n">Rotation2d</span><span class="p">.</span><span class="na">fromRotations</span><span class="p">(</span><span class="n">cancoder</span><span class="p">.</span><span class="na">getAbsolutePosition</span><span class="p">().</span><span class="na">getValueAsDouble</span><span class="p">()).</span><span class="na">getDegrees</span><span class="p">(),</span>
+</span><span id="line-100"><span class="w">                </span><span class="n">state</span><span class="p">.</span><span class="na">angle</span><span class="p">.</span><span class="na">getDegrees</span><span class="p">())</span>
+</span><span id="line-101"><span class="w">        </span><span class="p">);</span>
+</span><span id="line-102"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-103">
+</span><span id="line-104"><span class="w">    </span><span class="c1">//converter</span>
+</span><span id="line-105"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">mpsToRPM</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">mps</span><span class="p">){</span>
+</span><span id="line-106"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">mps</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kWheelDiameter</span><span class="o">*</span><span class="n">Math</span><span class="p">.</span><span class="na">PI</span><span class="p">)</span><span class="o">*</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kDriveGearRatio</span><span class="p">;</span>
+</span><span id="line-107"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-108"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div></div>
+<p>and then is the chasis code.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-4-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-4-4-0" name="4-0" role="tab" tabindex="0">SparkMax+NEO</button></div><div aria-labelledby="tab-4-4-0" class="sphinx-tabs-panel" id="panel-4-4-0" name="4-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.studica.frc.AHRS</span><span class="p">;</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.studica.frc.AHRS.NavXComType</span><span class="p">;</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.geometry.Pose2d</span><span class="p">;</span>
+</span><span id="line-5"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.ChassisSpeeds</span><span class="p">;</span>
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveDriveKinematics</span><span class="p">;</span>
+</span><span id="line-7"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveDriveOdometry</span><span class="p">;</span>
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveModulePosition</span><span class="p">;</span>
+</span><span id="line-9"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.math.kinematics.SwerveModuleState</span><span class="p">;</span>
+</span><span id="line-10"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.networktables.NetworkTableInstance</span><span class="p">;</span>
+</span><span id="line-11"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.networktables.PubSubOption</span><span class="p">;</span>
+</span><span id="line-12"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.networktables.StructArrayPublisher</span><span class="p">;</span>
+</span><span id="line-13"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.networktables.StructPublisher</span><span class="p">;</span>
+</span><span id="line-14"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.wpilibj2.command.SubsystemBase</span><span class="p">;</span>
+</span><span id="line-15"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.ChassisConstants</span><span class="p">;</span>
+</span><span id="line-16"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.MotorConstants</span><span class="p">;</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SwerveChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-19"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveMod</span><span class="w"> </span><span class="n">LeftFront</span><span class="p">,</span><span class="w"> </span><span class="n">RightFront</span><span class="p">,</span><span class="w"> </span><span class="n">LeftBack</span><span class="p">,</span><span class="w"> </span><span class="n">RightBack</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define the modules</span>
+</span><span id="line-20"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">AHRS</span><span class="w"> </span><span class="n">gyro</span><span class="p">;</span>
+</span><span id="line-21"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveDriveOdometry</span><span class="w"> </span><span class="n">odometry</span><span class="p">;</span>
+</span><span id="line-22"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">StructArrayPublisher</span><span class="o">&lt;</span><span class="n">SwerveModuleState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">statePublish</span><span class="p">;</span><span class="w"> </span><span class="c1">//For AdvantageScope (Data publishing)</span>
+</span><span id="line-23"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">StructPublisher</span><span class="o">&lt;</span><span class="n">Pose2d</span><span class="o">&gt;</span><span class="w"> </span><span class="n">odometryPublish</span><span class="p">;</span><span class="w"> </span><span class="c1">//and also this line</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SwerveChassis</span><span class="p">(){</span>
+</span><span id="line-26">
+</span><span id="line-27"><span class="w">        </span><span class="c1">//Initialize the items</span>
+</span><span id="line-28"><span class="w">        </span><span class="n">LeftFront</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveMod</span><span class="p">(</span>
+</span><span id="line-29"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftFrontDriveID</span><span class="p">,</span>
+</span><span id="line-30"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftFrontRotationID</span><span class="p">,</span>
+</span><span id="line-31"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftFrontCANCoderID</span><span class="p">,</span>
+</span><span id="line-32"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftFrontOffset</span><span class="p">);</span>
+</span><span id="line-33">
+</span><span id="line-34"><span class="w">        </span><span class="n">LeftBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveMod</span><span class="p">(</span>
+</span><span id="line-35"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftBackDriveID</span><span class="p">,</span>
+</span><span id="line-36"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftBackRotationID</span><span class="p">,</span>
+</span><span id="line-37"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftBackCANCoderID</span><span class="w"> </span><span class="p">,</span>
+</span><span id="line-38"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">LeftBackOffset</span><span class="p">);</span>
+</span><span id="line-39">
+</span><span id="line-40"><span class="w">        </span><span class="n">RightFront</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveMod</span><span class="p">(</span>
+</span><span id="line-41"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightFrontDriveID</span><span class="p">,</span>
+</span><span id="line-42"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightFrontRotationID</span><span class="p">,</span>
+</span><span id="line-43"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightFrontCANCoderID</span><span class="p">,</span>
+</span><span id="line-44"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightFrontOffset</span><span class="p">);</span>
+</span><span id="line-45">
+</span><span id="line-46"><span class="w">        </span><span class="n">RightBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveMod</span><span class="p">(</span>
+</span><span id="line-47"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightBackRotationID</span><span class="p">,</span>
+</span><span id="line-48"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightBackRotationID</span><span class="p">,</span>
+</span><span id="line-49"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightBackCANCoderID</span><span class="p">,</span>
+</span><span id="line-50"><span class="w">            </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">RightBackOffset</span><span class="p">);</span>
+</span><span id="line-51">
+</span><span id="line-52"><span class="w">        </span><span class="n">gyro</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AHRS</span><span class="p">(</span><span class="n">NavXComType</span><span class="p">.</span><span class="na">kMXP_SPI</span><span class="p">);</span>
+</span><span id="line-53"><span class="w">        </span><span class="n">odometry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveDriveOdometry</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kSwerveDriveKinematics</span><span class="p">,</span><span class="w"> </span><span class="n">gyro</span><span class="p">.</span><span class="na">getRotation2d</span><span class="p">(),</span><span class="w"> </span><span class="n">getModulePosition</span><span class="p">());</span>
+</span><span id="line-54"><span class="w">        </span><span class="n">statePublish</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NetworkTableInstance</span><span class="p">.</span><span class="na">getDefault</span><span class="p">().</span><span class="na">getStructArrayTopic</span><span class="p">(</span><span class="s">"SwerveDrive"</span><span class="p">,</span><span class="n">SwerveModuleState</span><span class="p">.</span><span class="na">struct</span><span class="p">).</span><span class="na">publish</span><span class="p">(</span><span class="n">PubSubOption</span><span class="p">.</span><span class="na">keepDuplicates</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span>
+</span><span id="line-55"><span class="w">        </span><span class="n">odometryPublish</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NetworkTableInstance</span><span class="p">.</span><span class="na">getDefault</span><span class="p">().</span><span class="na">getStructTopic</span><span class="p">(</span><span class="s">"Odometry"</span><span class="p">,</span><span class="w"> </span><span class="n">Pose2d</span><span class="p">.</span><span class="na">struct</span><span class="p">).</span><span class="na">publish</span><span class="p">(</span><span class="n">PubSubOption</span><span class="p">.</span><span class="na">keepDuplicates</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span>
+</span><span id="line-56"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-57">
+</span><span id="line-58"><span class="w">    </span><span class="c1">//drive the chassis from the double value input</span>
+</span><span id="line-59"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">xSpeed</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">ySpeed</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">zRotation</span><span class="p">){</span>
+</span><span id="line-60"><span class="w">        </span><span class="n">setModuleState</span><span class="p">(</span>
+</span><span id="line-61"><span class="w">            </span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">kSwerveDriveKinematics</span><span class="p">.</span><span class="na">toSwerveModuleStates</span><span class="p">(</span>
+</span><span id="line-62"><span class="w">                </span><span class="n">ChassisSpeeds</span><span class="p">.</span><span class="na">fromRobotRelativeSpeeds</span><span class="p">(</span><span class="n">ChassisSpeeds</span><span class="p">.</span><span class="na">discretize</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ChassisSpeeds</span><span class="p">(</span><span class="n">xSpeed</span><span class="p">,</span><span class="w"> </span><span class="n">ySpeed</span><span class="p">,</span><span class="w"> </span><span class="n">zRotation</span><span class="p">),</span><span class="w"> </span><span class="mf">0.02</span><span class="p">),</span><span class="w"> </span><span class="n">gyro</span><span class="p">.</span><span class="na">getRotation2d</span><span class="p">())</span>
+</span><span id="line-63"><span class="w">            </span><span class="p">)</span>
+</span><span id="line-64"><span class="w">        </span><span class="p">);</span>
+</span><span id="line-65"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-66">
+</span><span id="line-67"><span class="w">    </span><span class="c1">//receive the module states from the SwerveModuleStates and apply to each module</span>
+</span><span id="line-68"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setModuleState</span><span class="p">(</span><span class="n">SwerveModuleState</span><span class="o">[]</span><span class="w"> </span><span class="n">states</span><span class="p">){</span>
+</span><span id="line-69"><span class="w">        </span><span class="n">SwerveDriveKinematics</span><span class="p">.</span><span class="na">desaturateWheelSpeeds</span><span class="p">(</span><span class="n">states</span><span class="p">,</span><span class="w"> </span><span class="n">MotorConstants</span><span class="p">.</span><span class="na">kMaxRobotSpeedMPS</span><span class="p">);</span>
+</span><span id="line-70"><span class="w">        </span><span class="n">LeftFront</span><span class="p">.</span><span class="na">setState</span><span class="p">(</span><span class="n">states</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+</span><span id="line-71"><span class="w">        </span><span class="n">RightFront</span><span class="p">.</span><span class="na">setState</span><span class="p">(</span><span class="n">states</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+</span><span id="line-72"><span class="w">        </span><span class="n">LeftBack</span><span class="p">.</span><span class="na">setState</span><span class="p">(</span><span class="n">states</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
+</span><span id="line-73"><span class="w">        </span><span class="n">RightBack</span><span class="p">.</span><span class="na">setState</span><span class="p">(</span><span class="n">states</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">);</span>
+</span><span id="line-74"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-75">
+</span><span id="line-76"><span class="w">    </span><span class="c1">//get the module positions</span>
+</span><span id="line-77"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveModulePosition</span><span class="o">[]</span><span class="w"> </span><span class="nf">getModulePosition</span><span class="p">(){</span>
+</span><span id="line-78"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveModulePosition</span><span class="o">[]</span><span class="p">{</span>
+</span><span id="line-79"><span class="w">            </span><span class="n">LeftFront</span><span class="p">.</span><span class="na">getPosition</span><span class="p">(),</span>
+</span><span id="line-80"><span class="w">            </span><span class="n">RightFront</span><span class="p">.</span><span class="na">getPosition</span><span class="p">(),</span>
+</span><span id="line-81"><span class="w">            </span><span class="n">LeftBack</span><span class="p">.</span><span class="na">getPosition</span><span class="p">(),</span>
+</span><span id="line-82"><span class="w">            </span><span class="n">RightBack</span><span class="p">.</span><span class="na">getPosition</span><span class="p">()</span>
+</span><span id="line-83"><span class="w">        </span><span class="p">};</span>
+</span><span id="line-84"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-85">
+</span><span id="line-86"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SwerveModuleState</span><span class="o">[]</span><span class="w"> </span><span class="nf">getModuleStates</span><span class="p">(){</span>
+</span><span id="line-87"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SwerveModuleState</span><span class="o">[]</span><span class="p">{</span>
+</span><span id="line-88"><span class="w">            </span><span class="n">LeftFront</span><span class="p">.</span><span class="na">getState</span><span class="p">(),</span>
+</span><span id="line-89"><span class="w">            </span><span class="n">RightFront</span><span class="p">.</span><span class="na">getState</span><span class="p">(),</span>
+</span><span id="line-90"><span class="w">            </span><span class="n">LeftBack</span><span class="p">.</span><span class="na">getState</span><span class="p">(),</span>
+</span><span id="line-91"><span class="w">            </span><span class="n">RightBack</span><span class="p">.</span><span class="na">getState</span><span class="p">()</span>
+</span><span id="line-92"><span class="w">        </span><span class="p">};</span>
+</span><span id="line-93"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-94">
+</span><span id="line-95"><span class="w">    </span><span class="c1">//upload the data to the NetworkTables</span>
+</span><span id="line-96"><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="line-97"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">periodic</span><span class="p">(){</span>
+</span><span id="line-98"><span class="w">        </span><span class="n">odometry</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">gyro</span><span class="p">.</span><span class="na">getRotation2d</span><span class="p">(),</span><span class="w"> </span><span class="n">getModulePosition</span><span class="p">());</span>
+</span><span id="line-99"><span class="w">        </span><span class="n">odometryPublish</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">odometry</span><span class="p">.</span><span class="na">getPoseMeters</span><span class="p">());</span>
+</span><span id="line-100"><span class="w">        </span><span class="n">statePublish</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">getModuleStates</span><span class="p">());</span>
+</span><span id="line-101"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-102"><span class="p">}</span>
 </span></code></pre></div>
 </div>
 </div></div>
 </section>
 <section id="cancoder-calibration">
 <span id="id1"></span><h3>CANCoder Calibration<a class="headerlink" href="#cancoder-calibration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cancoder-calibration'"><span>#</span></a></h3>
-<div class="line-block">
-<div class="line">Frist of all, set the CANCoderOffset to Zero and motor to coast.</div>
-<div class="line">Deploy the code.</div>
-<div class="line">Then make the wheel’s gear facing the same direction (rotate in same method like all clockwise or counter clockwise)</div>
-<div class="line">copy the value CANCoder read to the CANCoderOffset and set motor to brake</div>
-</div>
+<ol class="arabic simple">
+<li><p>Frist of all, set the CANCoderOffset to Zero and motor to coast.</p></li>
+<li><p>Deploy the code.</p></li>
+<li><p>Then make the wheel’s gear facing the same direction (rotate in same method like all clockwise or counter clockwise)</p></li>
+<li><p>Use a straight thing like aluminum tube to alignment the wheels</p></li>
+<li><p>copy the value CANCoder read to the CANCoderOffset and set motor to brake</p></li>
+</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>the value need to times -1</p>
