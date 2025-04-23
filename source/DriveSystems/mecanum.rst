@@ -17,4 +17,159 @@ Because of the characteristics of the mecanum wheel, the robot can perform more 
     If you want to know more about mecanum drive kinematics, you can check out `this <https://www.youtube.com/watch?v=hoTK9CZBnaE>`_ video.
 
 
-This image demonstrates how the chassis responds to various wheel spin patterns. Each wheel's motion can be described as follows:
+This image demonstrates how the chassis responds to various wheel spin patterns. Each wheel's motion can be described as:
+
+.. tabs::
+    .. tab:: Wheel Speeds
+        .. code-block:: java
+
+            FrontLeft = Vx + Vy + rotation
+            FrontRight = Vx - Vy + rotation
+            BackLeft = Vx + Vy - rotation
+            BackRight = Vx - Vy - rotation
+
+and below the chassis code
+
+**OFFICAL METHOD**
+
+.. tabs::
+    .. tab:: SparkMax+NEO
+        .. code-block:: java
+                    
+            import com.revrobotics.spark.SparkMax;
+            import com.revrobotics.spark.SparkLowLevel.MotorType;
+            import com.revrobotics.spark.config.SparkMaxConfig;
+            import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+            import edu.wpi.first.wpilibj.drive.MecanumDrive;
+            import edu.wpi.first.wpilibj2.command.SubsystemBase;
+            import frc.robot.Constants.ChassisConstants;
+            
+            public class NEOChassis extends SubsystemBase{
+                public SparkMax LeftFrontMotor, RightFrontMotor, LeftBackMotor, RightBackMotor;
+                public SparkMaxConfig LeftFrontConfig, RightFrontConfig, LeftBackConfig, RightBackConfig;
+
+                public MecanumDrive drive;
+
+                public NEOChassis(){
+                    LeftFrontMotor = new SparkMax(ChassisConstants.FrontLeftMotor, MotorType.kBrushless);
+                    RightFrontMotor = new SparkMax(ChassisConstants.FrontRightMotor, MotorType.kBrushless);
+                    LeftBackMotor = new SparkMax(ChassisConstants.BackLeftMotor, MotorType.kBrushless);
+                    RightBackMotor = new SparkMax(ChassisConstants.BackRightMotor, MotorType.kBrushless);
+
+                    LeftFrontConfig = new SparkMaxConfig();
+                    RightFrontConfig = new SparkMaxConfig();
+                    LeftBackConfig = new SparkMaxConfig();
+                    RightBackConfig = new SparkMaxConfig();
+
+                    LeftFrontConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(false);
+                    
+                    LeftBackConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(false);
+
+                    RightFrontConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(true);
+
+                    RightBackConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(true);
+
+                    drive = new MecanumDrive(LeftFrontMotor, LeftBackMotor, RightFrontMotor, RightBackMotor);
+                }
+            }
+
+        .. tab:: TalonSRX+CIM
+            .. code-block:: java
+                
+                import com.ctre.phoenix.motorcontrol.NeutralMode;
+                import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+                import edu.wpi.first.wpilibj.drive.MecanumDrive;
+                import frc.robot.Constants.ChassisConstants;
+
+                public class CIMChassis {
+                    public WPI_TalonSRX FrontLeft, FrontRight, BackLeft, BackRight;
+                    public MecanumDrive drive;
+
+                    public CIMChassis(){
+                        FrontLeft = new WPI_TalonSRX(ChassisConstants.FrontLeftMotor);
+                        FrontRight = new WPI_TalonSRX(ChassisConstants.FrontRightMotor);
+                        BackLeft = new WPI_TalonSRX(ChassisConstants.BackLeftMotor);
+                        BackRight = new WPI_TalonSRX(ChassisConstants.BackRightMotor);
+
+                        FrontLeft.setNeutralMode(NeutralMode.Brake);
+                        FrontLeft.setInverted(false);
+
+                        BackLeft.setNeutralMode(NeutralMode.Brake);
+                        FrontRight.setInverted(false);
+
+                        FrontRight.setNeutralMode(NeutralMode.Brake);
+                        FrontRight.setInverted(true);
+
+                        BackRight.setNeutralMode(NeutralMode.Brake);
+                        BackRight.setInverted(true);
+
+                        drive = new MecanumDrive(FrontLeft, BackLeft, FrontRight, BackRight);
+                    }
+                }
+
+
+
+**SELF WRITTEN METHOD**
+
+.. tabs::
+    .. tab:: SparkMax+NEO
+        .. code-block:: java
+
+            import com.revrobotics.spark.SparkMax;
+            import com.revrobotics.spark.SparkLowLevel.MotorType;
+            import com.revrobotics.spark.config.SparkMaxConfig;
+            import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+            import edu.wpi.first.wpilibj2.command.SubsystemBase;
+            import frc.robot.Constants.ChassisConstants;
+
+            public class NEOChassis extends SubsystemBase{
+                public SparkMax LeftFrontMotor, RightFrontMotor, LeftBackMotor, RightBackMotor;
+                public SparkMaxConfig LeftFrontConfig, RightFrontConfig, LeftBackConfig, RightBackConfig;
+
+                public NEOChassis(){
+                    LeftFrontMotor = new SparkMax(ChassisConstants.FrontLeftMotor, MotorType.kBrushless);
+                    RightFrontMotor = new SparkMax(ChassisConstants.FrontRightMotor, MotorType.kBrushless);
+                    LeftBackMotor = new SparkMax(ChassisConstants.BackLeftMotor, MotorType.kBrushless);
+                    RightBackMotor = new SparkMax(ChassisConstants.BackRightMotor, MotorType.kBrushless);
+
+                    LeftFrontConfig = new SparkMaxConfig();
+                    RightFrontConfig = new SparkMaxConfig();
+                    LeftBackConfig = new SparkMaxConfig();
+                    RightBackConfig = new SparkMaxConfig();
+
+                    LeftFrontConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(false);
+                    
+                    LeftBackConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(false);
+
+                    RightFrontConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(true);
+
+                    RightBackConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(true);
+
+                }
+
+                public void drive(double Vx, double Vy, double rotation){
+                    LeftFrontMotor.set(Vx+Vy+rotation);
+                    LeftBackMotor.set(Vx+Vy-rotation);
+                    RightFrontMotor.set(Vx-Vy+rotation);
+                    RightBackMotor.set(Vx-Vy-rotation);
+                }
+            }

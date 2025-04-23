@@ -24,9 +24,7 @@ Software Installation:
     You don't need to type out the entire name—just start typing, wait for the recommended words to appear, and hit Enter to fill it out and auto imported when needed.
 
 .. tabs::
-    
     .. tab:: SparkMax+NEO
-
             .. code-block:: java
 
                 //Chassis.java
@@ -74,7 +72,6 @@ Software Installation:
 
 
     .. tab:: TalonSRX+CIM
-
             .. code-block:: java
 
                     //Chassis.java
@@ -117,7 +114,6 @@ Software Installation:
 
 
     .. tab:: Kraken
-
             .. code-block:: java
 
                 //Chassis.java
@@ -162,7 +158,6 @@ After completing the chassis, we need a command to drive it.
 
 .. tabs::
     .. tab:: Official method
-
         .. code-block:: java
 
             //OfficalDriveCmd.java
