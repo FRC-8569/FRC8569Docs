@@ -24,9 +24,9 @@ This image demonstrates how the chassis responds to various wheel spin patterns.
         .. code-block:: java
 
             FrontLeft = Vx + Vy + rotation
-            FrontRight = Vx - Vy + rotation
-            BackLeft = Vx + Vy - rotation
-            BackRight = Vx - Vy - rotation
+            FrontRight = Vx - Vy - rotation
+            BackLeft = Vx - Vy + rotation
+            BackRight = Vx + Vy - rotation
 
 and below the chassis code
 
@@ -82,40 +82,39 @@ and below the chassis code
                 }
             }
 
-        .. tab:: TalonSRX+CIM
-            .. code-block:: java
-                
-                import com.ctre.phoenix.motorcontrol.NeutralMode;
-                import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+    .. tab:: TalonSRX+CIM
+        .. code-block:: java
 
-                import edu.wpi.first.wpilibj.drive.MecanumDrive;
-                import frc.robot.Constants.ChassisConstants;
+            import com.ctre.phoenix.motorcontrol.NeutralMode;
+            import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-                public class CIMChassis {
-                    public WPI_TalonSRX FrontLeft, FrontRight, BackLeft, BackRight;
-                    public MecanumDrive drive;
+            import edu.wpi.first.wpilibj.drive.MecanumDrive;
+            import frc.robot.Constants.ChassisConstants;
 
-                    public CIMChassis(){
-                        FrontLeft = new WPI_TalonSRX(ChassisConstants.FrontLeftMotor);
-                        FrontRight = new WPI_TalonSRX(ChassisConstants.FrontRightMotor);
-                        BackLeft = new WPI_TalonSRX(ChassisConstants.BackLeftMotor);
-                        BackRight = new WPI_TalonSRX(ChassisConstants.BackRightMotor);
+            public class CIMChassis {
+                public WPI_TalonSRX FrontLeft, FrontRight, BackLeft, BackRight;
+                public MecanumDrive drive;
 
-                        FrontLeft.setNeutralMode(NeutralMode.Brake);
-                        FrontLeft.setInverted(false);
+                public CIMChassis(){
+                    FrontLeft = new WPI_TalonSRX(ChassisConstants.FrontLeftMotor);
+                    FrontRight = new WPI_TalonSRX(ChassisConstants.FrontRightMotor);
+                    BackLeft = new WPI_TalonSRX(ChassisConstants.BackLeftMotor);                        BackRight = new WPI_TalonSRX(ChassisConstants.BackRightMotor);
 
-                        BackLeft.setNeutralMode(NeutralMode.Brake);
-                        FrontRight.setInverted(false);
+                    FrontLeft.setNeutralMode(NeutralMode.Brake);
+                    FrontLeft.setInverted(false);
 
-                        FrontRight.setNeutralMode(NeutralMode.Brake);
-                        FrontRight.setInverted(true);
+                    BackLeft.setNeutralMode(NeutralMode.Brake);
+                    FrontRight.setInverted(false);
 
-                        BackRight.setNeutralMode(NeutralMode.Brake);
-                        BackRight.setInverted(true);
+                    FrontRight.setNeutralMode(NeutralMode.Brake);
+                    FrontRight.setInverted(true);
 
-                        drive = new MecanumDrive(FrontLeft, BackLeft, FrontRight, BackRight);
-                    }
+                    BackRight.setNeutralMode(NeutralMode.Brake);
+                    BackRight.setInverted(true);
+
+                    drive = new MecanumDrive(FrontLeft, BackLeft, FrontRight, BackRight);
                 }
+            }
 
 
 
@@ -168,8 +167,99 @@ and below the chassis code
 
                 public void drive(double Vx, double Vy, double rotation){
                     LeftFrontMotor.set(Vx+Vy+rotation);
-                    LeftBackMotor.set(Vx+Vy-rotation);
-                    RightFrontMotor.set(Vx-Vy+rotation);
-                    RightBackMotor.set(Vx-Vy-rotation);
+                    LeftBackMotor.set(Vx-Vy+rotation);
+                    RightFrontMotor.set(Vx-Vy-rotation);
+                    RightBackMotor.set(Vx+Vy-rotation);
+                }
+            }
+
+    .. tab:: TalonSRX+CIM
+        .. code-block:: java
+
+            import com.ctre.phoenix.motorcontrol.ControlMode;
+            import com.ctre.phoenix.motorcontrol.NeutralMode;
+            import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+            import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+            import edu.wpi.first.wpilibj.drive.MecanumDrive;
+            import frc.robot.Constants.ChassisConstants;
+
+            public class CIMChassis {
+                public TalonSRX FrontLeft, FrontRight, BackLeft, BackRight;
+                public MecanumDrive drive;
+
+                public CIMChassis(){
+                    FrontLeft = new TalonSRX(ChassisConstants.FrontLeftMotor);
+                    FrontRight = new TalonSRX(ChassisConstants.FrontRightMotor);
+                    BackLeft = new TalonSRX(ChassisConstants.BackLeftMotor);
+                    BackRight = new TalonSRX(ChassisConstants.BackRightMotor);
+
+                    FrontLeft.setNeutralMode(NeutralMode.Brake);
+                    FrontLeft.setInverted(false);
+
+                    BackLeft.setNeutralMode(NeutralMode.Brake);
+                    FrontRight.setInverted(false);
+
+                    FrontRight.setNeutralMode(NeutralMode.Brake);
+                    FrontRight.setInverted(true);
+
+                    BackRight.setNeutralMode(NeutralMode.Brake);
+                    BackRight.setInverted(true);
+                }
+
+                public void drive(double xSpeed, double ySpeed, double zRotation){
+                    FrontLeft.set(TalonSRXControlMode.PercentOutput, xSpeed+ySpeed+zRotation);
+                    BackLeft.set(TalonSRXControlMode.PercentOutput, xSpeed-ySpeed+zRotation);
+                    FrontRight.set(ControlMode.PercentOutput, xSpeed-ySpeed-zRotation);
+                    BackRight.set(ControlMode.PercentOutput, xSpeed+ySpeed-zRotation);
+                }
+            }
+    
+    .. tab:: Kraken
+        .. code-block:: java
+            
+            import com.ctre.phoenix6.configs.TalonFXConfiguration;
+            import com.ctre.phoenix6.hardware.TalonFX;
+            import com.ctre.phoenix6.signals.InvertedValue;
+            import com.ctre.phoenix6.signals.NeutralModeValue;
+
+            import frc.robot.Constants.ChassisConstants;
+
+            public class KrakenChassis {
+                public TalonFX FrontLeft, FrontRight, BackLeft, BackRight;
+                public TalonFXConfiguration FrontLeftConfig, FrontRightConfig, BackLeftConfig, BackRightConfig;
+
+                public KrakenChassis(){
+                    FrontLeft = new TalonFX(ChassisConstants.FrontLeftMotor);
+                    FrontRight = new TalonFX(ChassisConstants.FrontRightMotor);
+                    BackLeft = new TalonFX(ChassisConstants.BackLeftMotor);
+                    BackRight = new TalonFX(ChassisConstants.BackRightMotor);
+
+                    FrontLeftConfig = new TalonFXConfiguration();
+                    FrontRightConfig = new TalonFXConfiguration();
+                    BackLeftConfig = new TalonFXConfiguration();
+                    BackRightConfig = new TalonFXConfiguration();
+
+                    FrontLeftConfig.MotorOutput
+                        .withInverted(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake);
+                    
+                    BackLeftConfig.MotorOutput
+                        .withInverted(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake);
+
+                    FrontRightConfig.MotorOutput
+                        .withInverted(InvertedValue.CounterClockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake);
+
+                    BackRightConfig.MotorOutput
+                        .withInverted(InvertedValue.CounterClockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake);
+                    
+
+                    FrontLeft.getConfigurator().apply(FrontLeftConfig);
+                    BackLeft.getConfigurator().apply(BackLeftConfig);
+                    FrontRight.getConfigurator().apply(FrontRightConfig);
+                    BackRight.getConfigurator().apply(BackRightConfig);
                 }
             }
