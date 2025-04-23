@@ -61,11 +61,30 @@ There's two motors per wheel, one is for drive and one is for rotate, so we can 
 
 .. note:: 
     The CANCoder is not always percise for our robot, so we need to calibrate the CANCoder by :ref:`CANCoder-Calibration`
-    
+
+Module Position Definition
+++++++++++++++++++++++++++
+
+we need to create a SwerveKinematics
+
+.. tabs::
+    .. tab:: SwerveKinematics
+        .. code-block:: java
+
+
+
 
 .. _CANCoder-Calibration:
 
 CANCoder Calibration
 ++++++++++++++++++++
 
-hello
+| Frist of all, set the CANCoderOffset to Zero and motor to coast.
+| Deploy the code.
+| Then make the wheel's gear facing the same direction (rotate in same method like all clockwise or counter clockwise)
+| copy the value CANCoder read to the CANCoderOffset and set motor to brake
+
+.. note:: the value need to times -1
+
+deploy the code
+and enable the robot, it will rotate the motor to the same direction if offset has no critical error.

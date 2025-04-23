@@ -13,6 +13,7 @@
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
@@ -118,6 +119,194 @@
 </dl>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don’t need to type out the entire name—just start typing, wait for the recommended words to appear, and hit Enter to fill it out and auto imported when needed.</p>
+</div>
+<p><strong>OFFICAL DRIVE METHOD</strong></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It’s recommended to write your own drive method instead of using the official one, as it offers more flexibility and extensibility for your drive system.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to use either the official drive method or your own properly written one; otherwise, it could cause runtime errors.</p>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">SparkMax+NEO</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">TalonSRX+CIM</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkMax</span><span class="p">;</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.PersistMode</span><span class="p">;</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.ResetMode</span><span class="p">;</span>
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkLowLevel.MotorType</span><span class="p">;</span>
+</span><span id="line-5"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.config.SparkMaxConfig</span><span class="p">;</span>
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.config.SparkBaseConfig.IdleMode</span><span class="p">;</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.wpilibj.drive.DifferentialDrive</span><span class="p">;</span>
+</span><span id="line-9"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.wpilibj2.command.SubsystemBase</span><span class="p">;</span>
+</span><span id="line-10"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.ChassisConstants</span><span class="p">;</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1">//the file name must same with this</span>
+</span><span id="line-13"><span class="c1">//              ^</span>
+</span><span id="line-14"><span class="c1">//              |</span>
+</span><span id="line-15"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NEOChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-16"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define the motors from the motor controller (define four motors if you use four)</span>
+</span><span id="line-17"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="w"> </span><span class="n">LeftConfig</span><span class="p">,</span><span class="w"> </span><span class="n">RightConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define the configuration of the motors</span>
+</span><span id="line-18"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DifferentialDrive</span><span class="w"> </span><span class="n">drive</span><span class="p">;</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">NEOChassis</span><span class="p">(){</span>
+</span><span id="line-21"><span class="w">        </span><span class="c1">//Initialize the item we just defined</span>
+</span><span id="line-22"><span class="w">        </span><span class="n">LeftMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">LeftMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span><span class="c1">//use kBrushless because the NEO v1.1 motor is the brushless motor</span>
+</span><span id="line-23"><span class="w">        </span><span class="n">RightMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">RightMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="w">        </span><span class="n">LeftConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-26"><span class="w">        </span><span class="n">RightConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-27">
+</span><span id="line-28">
+</span><span id="line-29"><span class="w">        </span><span class="n">LeftConfig</span>
+</span><span id="line-30"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-31"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span id="line-32"><span class="w">        </span><span class="n">RightConfig</span>
+</span><span id="line-33"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-34"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// You need to invert the motor; otherwise, it will spin in the wrong direction when driving straight.</span>
+</span><span id="line-35">
+</span><span id="line-36"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">LeftConfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span><span class="w"> </span><span class="c1">//Apply the configurations</span>
+</span><span id="line-37"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">RightConfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span><span class="c1">//Both choose yes for the less problems, it will factory reset the motor</span>
+</span><span id="line-38"><span class="w">        </span><span class="n">drive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DifferentialDrive</span><span class="p">(</span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">);</span>
+</span><span id="line-39"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-40">
+</span><span id="line-41"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.InvertType</span><span class="p">;</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.NeutralMode</span><span class="p">;</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration</span><span class="p">;</span>
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX</span><span class="p">;</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.wpilibj.drive.DifferentialDrive</span><span class="p">;</span>
+</span><span id="line-7"><span class="kn">import</span><span class="w"> </span><span class="nn">edu.wpi.first.wpilibj2.command.SubsystemBase</span><span class="p">;</span>
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">frc.robot.Constants.ChassisConstants</span><span class="p">;</span>
+</span><span id="line-9">
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1">//File name must same with this</span>
+</span><span id="line-12"><span class="c1">//              ^</span>
+</span><span id="line-13"><span class="c1">//              |</span>
+</span><span id="line-14"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CIMChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-15"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">WPI_TalonSRX</span><span class="w"> </span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define two motors, you can define four if you needed</span>
+</span><span id="line-16"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DifferentialDrive</span><span class="w"> </span><span class="n">drive</span><span class="p">;</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CIMChassis</span><span class="p">(){</span>
+</span><span id="line-19"><span class="w">        </span><span class="c1">//Initialize the items we just defined</span>
+</span><span id="line-20"><span class="w">        </span><span class="n">LeftMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WPI_TalonSRX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">LeftMotorID</span><span class="p">);</span>
+</span><span id="line-21"><span class="w">        </span><span class="n">RightMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WPI_TalonSRX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">RightMotorID</span><span class="p">);</span>
+</span><span id="line-22">
+</span><span id="line-23"><span class="w">        </span><span class="c1">//reset the motor configuration for the less bugs</span>
+</span><span id="line-24"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">configAllSettings</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRXConfiguration</span><span class="p">());</span>
+</span><span id="line-25"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">configAllSettings</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRXConfiguration</span><span class="p">());</span>
+</span><span id="line-26">
+</span><span id="line-27">
+</span><span id="line-28"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">setNeutralMode</span><span class="p">(</span><span class="n">NeutralMode</span><span class="p">.</span><span class="na">Brake</span><span class="p">);</span>
+</span><span id="line-29"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">setInverted</span><span class="p">(</span><span class="n">InvertType</span><span class="p">.</span><span class="na">None</span><span class="p">);</span>
+</span><span id="line-30">
+</span><span id="line-31"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">setNeutralMode</span><span class="p">(</span><span class="n">NeutralMode</span><span class="p">.</span><span class="na">Brake</span><span class="p">);</span>
+</span><span id="line-32"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">setInverted</span><span class="p">(</span><span class="n">InvertType</span><span class="p">.</span><span class="na">InvertMotorOutput</span><span class="p">);</span>
+</span><span id="line-33">
+</span><span id="line-34"><span class="w">        </span><span class="n">drive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DifferentialDrive</span><span class="p">(</span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">);</span>
+</span><span id="line-35"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-36"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div></div>
+<p><strong>SELF WRITTEN</strong></p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SparkMax+NEO</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">TalonSRX+CIM</button><button aria-controls="panel-1-1-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-2" name="1-2" role="tab" tabindex="-1">Kraken</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NEOChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-2"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define the motors from the motor controller (define four motors if you use four)</span>
+</span><span id="line-3"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="w"> </span><span class="n">LeftConfig</span><span class="p">,</span><span class="w"> </span><span class="n">RightConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define the configuration of the motors</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">NEOChassis</span><span class="p">(){</span>
+</span><span id="line-6"><span class="w">        </span><span class="c1">//Initialize the item we just defined</span>
+</span><span id="line-7"><span class="w">        </span><span class="n">LeftMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">LeftMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span><span class="c1">//use kBrushless because the NEO v1.1 motor is the brushless motor</span>
+</span><span id="line-8"><span class="w">        </span><span class="n">RightMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">RightMotorID</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="w">        </span><span class="n">LeftConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-11"><span class="w">        </span><span class="n">RightConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-12">
+</span><span id="line-13">
+</span><span id="line-14"><span class="w">        </span><span class="n">LeftConfig</span>
+</span><span id="line-15"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-16"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span id="line-17"><span class="w">        </span><span class="n">RightConfig</span>
+</span><span id="line-18"><span class="w">            </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span>
+</span><span id="line-19"><span class="w">            </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// You need to invert the motor; otherwise, it will spin in the wrong direction when driving straight.</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">LeftConfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span><span class="w"> </span><span class="c1">//Apply the configurations</span>
+</span><span id="line-22"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">RightConfig</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span><span class="c1">//Both choose yes for the less problems, it will factory reset the motor</span>
+</span><span id="line-23"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">rotation</span><span class="p">){</span>
+</span><span id="line-26"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">speed</span><span class="o">+</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-27"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">speed</span><span class="o">-</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-28"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-29"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CIMChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-2"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TalonSRX</span><span class="w"> </span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Define two motors, you can define four if you needed</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CIMChassis</span><span class="p">(){</span>
+</span><span id="line-5"><span class="w">            </span><span class="c1">//Initialize the items we just defined</span>
+</span><span id="line-6"><span class="w">            </span><span class="n">LeftMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">LeftMotorID</span><span class="p">);</span>
+</span><span id="line-7"><span class="w">            </span><span class="n">RightMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">RightMotorID</span><span class="p">);</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="w">            </span><span class="c1">//reset the motor configuration for the less bugs</span>
+</span><span id="line-10"><span class="w">            </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">configAllSettings</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRXConfiguration</span><span class="p">());</span>
+</span><span id="line-11"><span class="w">            </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">configAllSettings</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRXConfiguration</span><span class="p">());</span>
+</span><span id="line-12">
+</span><span id="line-13">
+</span><span id="line-14"><span class="w">            </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">setNeutralMode</span><span class="p">(</span><span class="n">NeutralMode</span><span class="p">.</span><span class="na">Brake</span><span class="p">);</span>
+</span><span id="line-15"><span class="w">            </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">setInverted</span><span class="p">(</span><span class="n">InvertType</span><span class="p">.</span><span class="na">None</span><span class="p">);</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="w">            </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">setNeutralMode</span><span class="p">(</span><span class="n">NeutralMode</span><span class="p">.</span><span class="na">Brake</span><span class="p">);</span>
+</span><span id="line-18"><span class="w">            </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">setInverted</span><span class="p">(</span><span class="n">InvertType</span><span class="p">.</span><span class="na">InvertMotorOutput</span><span class="p">);</span>
+</span><span id="line-19"><span class="w">        </span><span class="p">}</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">rotation</span><span class="p">){</span>
+</span><span id="line-22"><span class="w">            </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">ControlMode</span><span class="p">.</span><span class="na">PercentOutput</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="o">+</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-23"><span class="w">            </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">ControlMode</span><span class="p">.</span><span class="na">PercentOutput</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="o">-</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-24"><span class="w">        </span><span class="p">}</span>
+</span><span id="line-25"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-2" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-2" name="1-2" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">KrakenChassis</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SubsystemBase</span><span class="p">{</span>
+</span><span id="line-2"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TalonFX</span><span class="w"> </span><span class="n">LeftMotor</span><span class="p">,</span><span class="w"> </span><span class="n">RightMotor</span><span class="p">;</span>
+</span><span id="line-3"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TalonFXConfiguration</span><span class="w"> </span><span class="n">LeftConfig</span><span class="p">,</span><span class="w"> </span><span class="n">RightConfig</span><span class="p">;</span>
+</span><span id="line-4"><span class="w">    </span><span class="c1">//Bruh, your hardware screams performance, but your code still whispers 'default template'.</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">KrakenChassis</span><span class="p">(){</span>
+</span><span id="line-7"><span class="w">        </span><span class="n">LeftMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonFX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">LeftMotorID</span><span class="p">);</span>
+</span><span id="line-8"><span class="w">        </span><span class="n">RightMotor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonFX</span><span class="p">(</span><span class="n">ChassisConstants</span><span class="p">.</span><span class="na">RightMotorID</span><span class="p">);</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="w">        </span><span class="n">LeftConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonFXConfiguration</span><span class="p">();</span>
+</span><span id="line-11"><span class="w">        </span><span class="n">RightConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonFXConfiguration</span><span class="p">();</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="w">        </span><span class="n">LeftConfig</span><span class="p">.</span><span class="na">MotorOutput</span>
+</span><span id="line-14"><span class="w">            </span><span class="p">.</span><span class="na">withNeutralMode</span><span class="p">(</span><span class="n">NeutralModeValue</span><span class="p">.</span><span class="na">Brake</span><span class="p">)</span>
+</span><span id="line-15"><span class="w">            </span><span class="p">.</span><span class="na">withInverted</span><span class="p">(</span><span class="n">InvertedValue</span><span class="p">.</span><span class="na">Clockwise_Positive</span><span class="p">);</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="w">        </span><span class="n">RightConfig</span><span class="p">.</span><span class="na">MotorOutput</span>
+</span><span id="line-18"><span class="w">            </span><span class="p">.</span><span class="na">withNeutralMode</span><span class="p">(</span><span class="n">NeutralModeValue</span><span class="p">.</span><span class="na">Brake</span><span class="p">)</span>
+</span><span id="line-19"><span class="w">            </span><span class="p">.</span><span class="na">withInverted</span><span class="p">(</span><span class="n">InvertedValue</span><span class="p">.</span><span class="na">CounterClockwise_Positive</span><span class="p">);</span><span class="w"> </span><span class="c1">//Anyway it must opposite with left side</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">getConfigurator</span><span class="p">().</span><span class="na">apply</span><span class="p">(</span><span class="n">LeftConfig</span><span class="p">);</span>
+</span><span id="line-22"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">getConfigurator</span><span class="p">().</span><span class="na">apply</span><span class="p">(</span><span class="n">RightConfig</span><span class="p">);</span>
+</span><span id="line-23"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">rotation</span><span class="p">){</span>
+</span><span id="line-26"><span class="w">        </span><span class="n">LeftMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">speed</span><span class="o">+</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-27"><span class="w">        </span><span class="n">RightMotor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">speed</span><span class="o">-</span><span class="n">rotation</span><span class="p">);</span>
+</span><span id="line-28"><span class="w">    </span><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<p>}</p>
+</div></div>
 </section>
 </div></div>
 </main>
@@ -135,5 +324,6 @@
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 <script src="../_static/design-tabs.js?v=f930bc37"></script>
+<script src="../_static/tabs.js?v=3030b3cb"></script>
 </body>
 </html>

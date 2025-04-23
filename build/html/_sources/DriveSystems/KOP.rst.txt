@@ -20,3 +20,200 @@ Software Installation:
     TalonFX (kraken):
         Software VendorDeps: Phoneix 6
 
+.. note:: 
+    You don't need to type out the entire name—just start typing, wait for the recommended words to appear, and hit Enter to fill it out and auto imported when needed.
+ 
+**OFFICAL DRIVE METHOD**
+ 
+.. tip:: 
+    It's recommended to write your own drive method instead of using the official one, as it offers more flexibility and extensibility for your drive system.
+.. warning:: 
+    Make sure to use either the official drive method or your own properly written one; otherwise, it could cause runtime errors.
+
+.. tabs::
+    .. tab:: SparkMax+NEO
+        .. code-block:: java
+                        
+            import com.revrobotics.spark.SparkMax;
+            import com.revrobotics.spark.SparkBase.PersistMode;
+            import com.revrobotics.spark.SparkBase.ResetMode;
+            import com.revrobotics.spark.SparkLowLevel.MotorType;
+            import com.revrobotics.spark.config.SparkMaxConfig;
+            import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+            import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+            import edu.wpi.first.wpilibj2.command.SubsystemBase;
+            import frc.robot.Constants.ChassisConstants;
+
+            //the file name must same with this
+            //              ^
+            //              |
+            public class NEOChassis extends SubsystemBase{
+                public SparkMax LeftMotor, RightMotor; //Define the motors from the motor controller (define four motors if you use four)
+                public SparkMaxConfig LeftConfig, RightConfig; //Define the configuration of the motors
+                public DifferentialDrive drive;
+
+                public NEOChassis(){
+                    //Initialize the item we just defined
+                    LeftMotor = new SparkMax(ChassisConstants.LeftMotorID, MotorType.kBrushless);//use kBrushless because the NEO v1.1 motor is the brushless motor
+                    RightMotor = new SparkMax(ChassisConstants.RightMotorID, MotorType.kBrushless);
+
+                    LeftConfig = new SparkMaxConfig();
+                    RightConfig = new SparkMaxConfig();
+
+                    
+                    LeftConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(false);
+                    RightConfig
+                        .idleMode(IdleMode.kBrake)
+                        .inverted(true); // You need to invert the motor; otherwise, it will spin in the wrong direction when driving straight.
+
+                    LeftMotor.configure(LeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); //Apply the configurations
+                    RightMotor.configure(RightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);//Both choose yes for the less problems, it will factory reset the motor
+                    drive = new DifferentialDrive(LeftMotor, RightMotor);
+                }
+
+            }
+
+
+
+    .. tab:: TalonSRX+CIM
+        .. code-block:: java
+                        
+            import com.ctre.phoenix.motorcontrol.InvertType;
+            import com.ctre.phoenix.motorcontrol.NeutralMode;
+            import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+            import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+            import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+            import edu.wpi.first.wpilibj2.command.SubsystemBase;
+            import frc.robot.Constants.ChassisConstants;
+
+
+            //File name must same with this
+            //              ^
+            //              |
+            public class CIMChassis extends SubsystemBase{
+                public WPI_TalonSRX LeftMotor, RightMotor; //Define two motors, you can define four if you needed
+                public DifferentialDrive drive;
+                
+                public CIMChassis(){
+                    //Initialize the items we just defined
+                    LeftMotor = new WPI_TalonSRX(ChassisConstants.LeftMotorID);
+                    RightMotor = new WPI_TalonSRX(ChassisConstants.RightMotorID);
+
+                    //reset the motor configuration for the less bugs
+                    LeftMotor.configAllSettings(new TalonSRXConfiguration());
+                    RightMotor.configAllSettings(new TalonSRXConfiguration());
+
+
+                    LeftMotor.setNeutralMode(NeutralMode.Brake);
+                    LeftMotor.setInverted(InvertType.None);
+
+                    RightMotor.setNeutralMode(NeutralMode.Brake);
+                    RightMotor.setInverted(InvertType.InvertMotorOutput);
+
+                    drive = new DifferentialDrive(LeftMotor, RightMotor);
+                }
+            }
+
+
+**SELF WRITTEN**
+
+.. tabs::
+    .. tab:: SparkMax+NEO
+            .. code-block:: java
+
+                public class NEOChassis extends SubsystemBase{
+                    public SparkMax LeftMotor, RightMotor; //Define the motors from the motor controller (define four motors if you use four)
+                    public SparkMaxConfig LeftConfig, RightConfig; //Define the configuration of the motors
+
+                    public NEOChassis(){
+                        //Initialize the item we just defined
+                        LeftMotor = new SparkMax(ChassisConstants.LeftMotorID, MotorType.kBrushless);//use kBrushless because the NEO v1.1 motor is the brushless motor
+                        RightMotor = new SparkMax(ChassisConstants.RightMotorID, MotorType.kBrushless);
+
+                        LeftConfig = new SparkMaxConfig();
+                        RightConfig = new SparkMaxConfig();
+
+                        
+                        LeftConfig
+                            .idleMode(IdleMode.kBrake)
+                            .inverted(false);
+                        RightConfig
+                            .idleMode(IdleMode.kBrake)
+                            .inverted(true); // You need to invert the motor; otherwise, it will spin in the wrong direction when driving straight.
+
+                        LeftMotor.configure(LeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); //Apply the configurations
+                        RightMotor.configure(RightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);//Both choose yes for the less problems, it will factory reset the motor
+                    }
+
+                    public void drive(double speed, double rotation){
+                        LeftMotor.set(speed+rotation);
+                        RightMotor.set(speed-rotation);
+                    }
+                }
+
+    .. tab:: TalonSRX+CIM
+        .. code-block:: java
+
+            public class CIMChassis extends SubsystemBase{
+                public TalonSRX LeftMotor, RightMotor; //Define two motors, you can define four if you needed
+                
+                public CIMChassis(){
+                        //Initialize the items we just defined
+                        LeftMotor = new TalonSRX(ChassisConstants.LeftMotorID);
+                        RightMotor = new TalonSRX(ChassisConstants.RightMotorID);
+
+                        //reset the motor configuration for the less bugs
+                        LeftMotor.configAllSettings(new TalonSRXConfiguration());
+                        RightMotor.configAllSettings(new TalonSRXConfiguration());
+
+
+                        LeftMotor.setNeutralMode(NeutralMode.Brake);
+                        LeftMotor.setInverted(InvertType.None);
+
+                        RightMotor.setNeutralMode(NeutralMode.Brake);
+                        RightMotor.setInverted(InvertType.InvertMotorOutput);
+                    }
+
+                    public void drive(double speed, double rotation){
+                        LeftMotor.set(ControlMode.PercentOutput, speed+rotation);
+                        RightMotor.set(ControlMode.PercentOutput, speed-rotation);
+                    }
+            }
+
+
+    .. tab:: Kraken
+            .. code-block:: java
+
+                public class KrakenChassis extends SubsystemBase{
+                    public TalonFX LeftMotor, RightMotor;
+                    public TalonFXConfiguration LeftConfig, RightConfig;
+                    //Bruh, your hardware screams performance, but your code still whispers 'default template'.
+
+                    public KrakenChassis(){
+                        LeftMotor = new TalonFX(ChassisConstants.LeftMotorID);
+                        RightMotor = new TalonFX(ChassisConstants.RightMotorID);
+
+                        LeftConfig = new TalonFXConfiguration();
+                        RightConfig = new TalonFXConfiguration();
+
+                        LeftConfig.MotorOutput
+                            .withNeutralMode(NeutralModeValue.Brake)
+                            .withInverted(InvertedValue.Clockwise_Positive);
+                        
+                        RightConfig.MotorOutput
+                            .withNeutralMode(NeutralModeValue.Brake)
+                            .withInverted(InvertedValue.CounterClockwise_Positive); //Anyway it must opposite with left side
+
+                        LeftMotor.getConfigurator().apply(LeftConfig);
+                        RightMotor.getConfigurator().apply(RightConfig);
+                    }
+
+                    public void drive(double speed, double rotation){
+                        LeftMotor.set(speed+rotation);
+                        RightMotor.set(speed-rotation);
+                    }
+            }

@@ -157,9 +157,29 @@ or you can check your gyro definition to know your robot facing.</p>
 <p class="admonition-title">Note</p>
 <p>The CANCoder is not always percise for our robot, so we need to calibrate the CANCoder by <a class="reference internal" href="#cancoder-calibration"><span class="std std-ref">CANCoder Calibration</span></a></p>
 </div>
+<section id="module-position-definition">
+<h3>Module Position Definition<a class="headerlink" href="#module-position-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-position-definition'"><span>#</span></a></h3>
+<p>we need to create a SwerveKinematics</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SwerveKinematics</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span></code></pre></div>
+</div>
+</div></div>
+</section>
 <section id="cancoder-calibration">
 <span id="id1"></span><h3>CANCoder Calibration<a class="headerlink" href="#cancoder-calibration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cancoder-calibration'"><span>#</span></a></h3>
-<p>hello</p>
+<div class="line-block">
+<div class="line">Frist of all, set the CANCoderOffset to Zero and motor to coast.</div>
+<div class="line">Deploy the code.</div>
+<div class="line">Then make the wheel’s gear facing the same direction (rotate in same method like all clockwise or counter clockwise)</div>
+<div class="line">copy the value CANCoder read to the CANCoderOffset and set motor to brake</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the value need to times -1</p>
+</div>
+<p>deploy the code
+and enable the robot, it will rotate the motor to the same direction if offset has no critical error.</p>
 </section>
 </section>
 </section>
@@ -168,6 +188,7 @@ or you can check your gyro definition to know your robot facing.</p>
 <ul>
 <li><a :data-current="activeSection === '#swerve-chassis-dependices'" class="reference internal" href="#swerve-chassis-dependices">Swerve Chassis Dependices</a></li>
 <li><a :data-current="activeSection === '#constants-definition'" class="reference internal" href="#constants-definition">Constants Definition</a><ul>
+<li><a :data-current="activeSection === '#module-position-definition'" class="reference internal" href="#module-position-definition">Module Position Definition</a></li>
 <li><a :data-current="activeSection === '#cancoder-calibration'" class="reference internal" href="#cancoder-calibration">CANCoder Calibration</a></li>
 </ul>
 </li>
