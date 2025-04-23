@@ -7,6 +7,6 @@ In the FRC driving system, we have 3 kinds of chassis: ``KOP``, ``mecanum``, and
    :maxdepth: 3
    :caption: Driving Systems:
 
-   kop
+   KOP
    mecanum
    swerve
