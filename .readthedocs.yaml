@@ -9,16 +9,10 @@ build:
   tools:
     python: "3.13"
 
-  jobs:
-    pre_build:
-      - echo "skip them"
-
-    build:
-      - mkdir -p _readthedocs/html
-      - cp -r build/html/* _readthedocs/html/
-
-    post_build:
-      - echo "Done copying prebuilt HTML"
+    
+    commands: 
+      - mkdir --parents _readthedocs/html/
+      - cp --recursive build/html/* _readthedocs/html/
 
 sphinx:
    configuration: source/conf.py
