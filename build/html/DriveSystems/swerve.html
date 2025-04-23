@@ -13,6 +13,7 @@
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
@@ -72,7 +73,7 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Driving System Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="kop.html">KOP Chassis Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="KOP.html">KOP Chassis Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mecanum.html">Mecanum Chassis tutorial</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Swerve Chassis Tutorial</a></li>
 </ul>
@@ -102,8 +103,77 @@
 <div id="content" role="main">
 <section id="swerve-chassis-tutorial">
 <h1>Swerve Chassis Tutorial<a class="headerlink" href="#swerve-chassis-tutorial" title="Link to this heading"><span>#</span></a></h1>
+<p>The swerve chassis is one of the most advanced drivetrains in FRC, offering exceptional speed, power, and maneuverability, which is why it’s commonly used by top-tier teams. However, it requires the most tuning and debugging to achieve optimal performance.</p>
+<p>Swerve chassis image below:</p>
+<img alt="Swerve Chassis Image" src="https://www.chiefdelphi.com/uploads/default/98c9352ca78c34dfdc08f8b46b30b17e24915dd6"/>
+<section id="swerve-chassis-dependices">
+<h2>Swerve Chassis Dependices<a class="headerlink" href="#swerve-chassis-dependices" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#swerve-chassis-dependices'"><span>#</span></a></h2>
+<div class="line-block">
+<div class="line">8 motors (4 wheels, 2 motors per module)</div>
+<div class="line">4 encoders (1 per module, usually use CANCoder)</div>
+<div class="line">1 gyro (1 per robot)</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use all CTRE products (kraken motor, cancoder, pigeon), you can unlock hidden feature called Swerve Project Generator in Phoneix Tuner X</p>
+</div>
 </section>
+<section id="constants-definition">
+<h2>Constants Definition<a class="headerlink" href="#constants-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#constants-definition'"><span>#</span></a></h2>
+<p>There’s two motors per wheel, one is for drive and one is for rotate, so we can define our chassis constants as</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Here we use front back … to perform modules, in real programming, recommend to use mod0, mod1 to name the modules
+or you can check your gyro definition to know your robot facing.</p>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">SwerveChassisMotorID</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">public</span> <span class="k">class</span><span class="w"> </span><span class="nc">SwerveConstants</span><span class="p">{</span>
+</span><span id="line-2">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontLeftDriveID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-3">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontLeftRotationID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-4">
+</span><span id="line-5">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontRightDriveID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-6">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontRightRotationID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-7">
+</span><span id="line-8">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackLeftDriveID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-9">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackLeftRotationID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-10">
+</span><span id="line-11">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackRightDriveID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-12">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackRightRotationID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-13">
+</span><span id="line-14">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontLeftCANCoderID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-15">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">FrontRightCANCoderID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-16">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackLeftCANCoderID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-17">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">BackRightCANCoderID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-18">
+</span><span id="line-19">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="n">double</span> <span class="n">FrontLeftCANCoderOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-20">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="n">double</span> <span class="n">FrontRightCANCoderOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-21">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="n">double</span> <span class="n">BackLeftCANCoderOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-22">    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="n">double</span> <span class="n">BackRightCANCoderOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span id="line-23"><span class="p">}</span>
+</span></code></pre></div>
+</div>
 </div></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The CANCoder is not always percise for our robot, so we need to calibrate the CANCoder by <a class="reference internal" href="#cancoder-calibration"><span class="std std-ref">CANCoder Calibration</span></a></p>
+</div>
+<section id="cancoder-calibration">
+<span id="id1"></span><h3>CANCoder Calibration<a class="headerlink" href="#cancoder-calibration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cancoder-calibration'"><span>#</span></a></h3>
+<p>hello</p>
+</section>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#swerve-chassis-dependices'" class="reference internal" href="#swerve-chassis-dependices">Swerve Chassis Dependices</a></li>
+<li><a :data-current="activeSection === '#constants-definition'" class="reference internal" href="#constants-definition">Constants Definition</a><ul>
+<li><a :data-current="activeSection === '#cancoder-calibration'" class="reference internal" href="#cancoder-calibration">CANCoder Calibration</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
@@ -119,5 +189,6 @@
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 <script src="../_static/design-tabs.js?v=f930bc37"></script>
+<script src="../_static/tabs.js?v=3030b3cb"></script>
 </body>
 </html>
