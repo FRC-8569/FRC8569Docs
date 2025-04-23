@@ -15,8 +15,8 @@ build:
 
     build:
       - mkdir -p _readthedocs/html
-      - cp -r prebuilt_html/* _readthedocs/html/
-      
+      - cp -r build/html/* _readthedocs/html/
+
     post_build:
       - echo "Done copying prebuilt HTML"
 
