@@ -18,7 +18,7 @@ Swerve Chassis Dependices
 | 1 gyro (1 per robot)
 
 .. note:: 
-    If you use all CTRE products (kraken motor, cancoder, pigeon), you can unlock hidden feature called Swerve Project Generator in Phoneix Tuner X 
+    If you use all CTRE products (kraken motor, cancoder, pigeon), you can unlock hidden feature called Swerve Project Generator in Phoenix Tuner X 
 
 ++++++++++++++++++++
 Constants Definition
