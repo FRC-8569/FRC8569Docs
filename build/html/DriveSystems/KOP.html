@@ -104,7 +104,8 @@
 <div id="content" role="main">
 <section id="kop-chassis-tutorial">
 <h1>KOP Chassis Tutorial<a class="headerlink" href="#kop-chassis-tutorial" title="Link to this heading"><span>#</span></a></h1>
-<p>The KOP chassis is built with at least two motors and four wheels like this:</p>
+<p>The KOP chassis is the easiest option for building and programming in FRC, which makes it perfect for new teams—simple design, strong build, and barely any code needed.</p>
+<p>KOP chassis image below:</p>
 <img alt="KOP Chassis" src="https://cdn.andymark.com/product_images/am14u5-6-wheel-drop-center-robot-drive-base-first-kit-of-parts-chassis/61cdd905b8a4235a6564320c/zoom.jpg"/>
 <p>In this image, each side has three wheels powered by two motors. The motors allow the robot to move forward and backward, and by varying the speed between the two sides, you can make it turn.</p>
 <p>You can program your KOP chassis in this method:</p>
@@ -213,10 +214,11 @@
 <p class="admonition-title">Tip</p>
 <p>It’s recommended to write your own drive method instead of using the official one, as it offers more flexibility and extensibility for your drive system.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
 <p>Make sure to use either the official drive method or your own properly written one; otherwise, it could cause runtime errors.</p>
 </div>
+<p><strong>SELF WRITEEN METHOD</strong></p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SparkMax+NEO</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">TalonSRX+CIM</button><button aria-controls="panel-1-1-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-2" name="1-2" role="tab" tabindex="-1">Kraken</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkMax</span><span class="p">;</span>
 </span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.revrobotics.spark.SparkBase.PersistMode</span><span class="p">;</span>
@@ -344,6 +346,11 @@
 </span></code></pre></div>
 </div>
 </div></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Check out the references
+<a class="reference external" href="https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html#using-the-differentialdrive-class-to-control-differential-drive-robots">DifferentialDrive</a></p>
+</div>
 </section>
 </div></div>
 </main>

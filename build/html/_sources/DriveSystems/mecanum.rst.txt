@@ -1,7 +1,9 @@
 Mecanum Chassis tutorial
 ========================
 
-A mecanum chassis must be built with at least four wheels—one motor for each wheel—in order to drive the robot properly.
+The mecanum chassis serves as a transition between the KOP and swerve drivetrains. It offers greater driving flexibility with only a small amount of additional code compared to the KOP chassis.
+
+Mecanum chassis image below:
 
 .. image:: https://d2t1xqejof9utc.cloudfront.net/screenshots/pics/1ab60f73d81dad6e74c83b6ad6e429e8/large.png
     :alt: Mecanum Chassis
@@ -263,3 +265,7 @@ and below the chassis code
                     BackRight.getConfigurator().apply(BackRightConfig);
                 }
             }
+
+.. note:: 
+    Check out the references
+    `MecanumDrive <https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html#using-the-mecanumdrive-class-to-control-mecanum-drive-robots>`_

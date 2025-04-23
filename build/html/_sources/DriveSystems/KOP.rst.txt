@@ -1,7 +1,9 @@
 KOP Chassis Tutorial
 ====================
 
-The KOP chassis is built with at least two motors and four wheels like this:
+The KOP chassis is the easiest option for building and programming in FRC, which makes it perfect for new teams—simple design, strong build, and barely any code needed.
+
+KOP chassis image below:
 
 .. image:: https://cdn.andymark.com/product_images/am14u5-6-wheel-drop-center-robot-drive-base-first-kit-of-parts-chassis/61cdd905b8a4235a6564320c/zoom.jpg
     :alt: KOP Chassis
@@ -117,8 +119,10 @@ Software Installation:
                     }
 .. tip:: 
     It's recommended to write your own drive method instead of using the official one, as it offers more flexibility and extensibility for your drive system.
-.. warning:: 
+.. danger:: 
     Make sure to use either the official drive method or your own properly written one; otherwise, it could cause runtime errors.
+
+**SELF WRITEEN METHOD**
 
 .. tabs::
     .. tab:: SparkMax+NEO
@@ -252,3 +256,7 @@ Software Installation:
                     RightMotor.set(speed-rotation);
                 }
             }
+
+.. note:: 
+    Check out the references
+    `DifferentialDrive <https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html#using-the-differentialdrive-class-to-control-differential-drive-robots>`_
