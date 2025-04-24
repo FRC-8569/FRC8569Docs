@@ -35,7 +35,7 @@ Basic Information:
     
     Power@40A: 380W
 
-    Wiring:12 10AWG
+    Wiring:12 AWG
     
     Controller: SparkMax
 
@@ -45,6 +45,8 @@ Basic Information:
     Type: Brushless motor
 
     Free Speed: 6784 RPM
+
+    Motor Kv: 565 RPM/v
 
     Stall Torque: 3.6Nm
 
@@ -61,9 +63,13 @@ Basic Information:
 
     Free Speed: 11000RPM
 
+    Motor Kv: 971 RPM/v
+
     Stall Torque: 0.97Nm
 
     Peak Power: 279 W
+
+    Wiring:12 AWG
 
 .. note:: 
     Check out the references:
