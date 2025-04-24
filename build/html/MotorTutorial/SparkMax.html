@@ -13,6 +13,7 @@
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
@@ -112,9 +113,81 @@
 <div id="content" role="main">
 <section id="sparkmax-motor-controller-introduction">
 <h1>SparkMax Motor Controller Introduction<a class="headerlink" href="#sparkmax-motor-controller-introduction" title="Link to this heading"><span>#</span></a></h1>
-<p>heelo</p>
-</section>
+<a class="reference internal image-reference" href="https://cdn11.bigcommerce.com/s-t3eo8vwp22/images/stencil/960w/products/360/2795/MAX_HERO-noflag__60247.1692730069.png"><img alt="SparkMax" src="https://cdn11.bigcommerce.com/s-t3eo8vwp22/images/stencil/960w/products/360/2795/MAX_HERO-noflag__60247.1692730069.png" style="width: 60%;"/>
+</a>
+<p>SparkMax motor controller is produced by REVRobotics, it can use on both brushed and brushless motors.</p>
+<p><strong>Software API: REVLib</strong></p>
+<section id="motor-definition">
+<h2>Motor Definition<a class="headerlink" href="#motor-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#motor-definition'"><span>#</span></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every configuration is not required, you can config all the settings you need</p>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">NEO</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Motor itself</span>
+</span><span id="line-2"><span class="kd">public</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"> </span><span class="c1">//motor config</span>
+</span><span id="line-3"><span class="kd">public</span><span class="w"> </span><span class="n">RelativeEncoder</span><span class="w"> </span><span class="n">encoder</span><span class="p">;</span><span class="w"> </span><span class="c1">//built in encoder</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="n">pubic</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configMotor</span><span class="p">(){</span>
+</span><span id="line-6"><span class="w">    </span><span class="n">motor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMax</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MotorType</span><span class="p">.</span><span class="na">kBrushless</span><span class="p">);</span><span class="c1">//you can configure the motor type bewteen kBrushless and kBrushed</span>
+</span><span id="line-7"><span class="w">    </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="p">();</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="w">    </span><span class="n">config</span>
+</span><span id="line-10"><span class="w">        </span><span class="p">.</span><span class="na">idleMode</span><span class="p">(</span><span class="n">IdleMode</span><span class="p">.</span><span class="na">kBrake</span><span class="p">)</span><span class="w"> </span><span class="c1">//The motor mode, kBrake will stop motor immediately otherwise will spin untill stop naturally</span>
+</span><span id="line-11"><span class="w">        </span><span class="p">.</span><span class="na">inverted</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="c1">//configure if the motor inverted</span>
+</span><span id="line-12"><span class="w">        </span><span class="p">.</span><span class="na">follow</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">//you can set the motor followed to another motor, usually used in 4 motor KOP chassis</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="w">    </span><span class="n">motor</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="n">ResetMode</span><span class="p">.</span><span class="na">kResetSafeParameters</span><span class="p">,</span><span class="w"> </span><span class="n">PersistMode</span><span class="p">.</span><span class="na">kPersistParameters</span><span class="p">);</span><span class="w"> </span><span class="c1">//apply settings to the motor</span>
+</span><span id="line-15"><span class="p">}</span>
+</span></code></pre></div>
+</div>
 </div></div>
+</section>
+<section id="the-differences-between-kbrake-and-kcoast">
+<span id="brakevscoast"></span><h2>The Differences between kBrake and kCoast<a class="headerlink" href="#the-differences-between-kbrake-and-kcoast" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#the-differences-between-kbrake-and-kcoast'"><span>#</span></a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 34.0%"/>
+<col style="width: 33.0%"/>
+<col style="width: 33.0%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>kBrake</p></th>
+<th class="head"><p>kCoast</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Behaviours</p></td>
+<td><p>stop instantly</p></td>
+<td><p>spin untill stop naturally</p></td>
+</tr>
+<tr class="row-odd"><td><p>code</p></td>
+<td><p>IdleMode.kBrake</p></td>
+<td><p>IdleMode.kCoast</p></td>
+</tr>
+<tr class="row-even"><td><p>common usage</p></td>
+<td><p>Most of the time</p></td>
+<td><p>CANCoder Calibrating</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>check out the references:
+<a class="reference external" href="https://docs.revrobotics.com/brushless/revlib/closed-loop-control-overview/closed-loop-control-getting-started">Closedloop Contol</a>
+<a class="reference external" href="https://docs.revrobotics.com/revlib/spark/configuring-a-spark">Configuring SparkMax</a></p>
+</div>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#motor-definition'" class="reference internal" href="#motor-definition">Motor Definition</a></li>
+<li><a :data-current="activeSection === '#the-differences-between-kbrake-and-kcoast'" class="reference internal" href="#the-differences-between-kbrake-and-kcoast">The Differences between kBrake and kCoast</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
@@ -130,5 +203,6 @@
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 <script src="../_static/design-tabs.js?v=f930bc37"></script>
+<script src="../_static/tabs.js?v=3030b3cb"></script>
 </body>
 </html>

@@ -112,51 +112,11 @@
 <div id="content" role="main">
 <section id="talonsrx-motor-controller-introduction">
 <h1>TalonSRX Motor Controller Introduction<a class="headerlink" href="#talonsrx-motor-controller-introduction" title="Link to this heading"><span>#</span></a></h1>
-<p>The TalonSRX is a versatile motor controller from Cross the Road Electronics (CTRE) designed for FRC robotics applications. It’s commonly used to control CIM motors, mini-CIMs, and other brushed DC motors in FRC competitions.</p>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#features'"><span>#</span></a></h2>
-<ul class="simple">
-<li><p>PWM and CAN bus communication</p></li>
-<li><p>Closed-loop control capabilities</p></li>
-<li><p>Support for limit switches and encoders</p></li>
-<li><p>Programmable using the CTRE Phoenix Framework</p></li>
-<li><p>Current limiting and voltage compensation</p></li>
-<li><p>Multiple control modes: Position, Velocity, Current, MotionMagic</p></li>
-</ul>
+<blockquote>
+<div><p>heelo</p>
+</div></blockquote>
 </section>
-<section id="setup-and-configuration">
-<h2>Setup and Configuration<a class="headerlink" href="#setup-and-configuration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#setup-and-configuration'"><span>#</span></a></h2>
-<p>To use a TalonSRX in your robot code:</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX</span><span class="p">;</span>
-</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">com.ctre.phoenix.motorcontrol.ControlMode</span><span class="p">;</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1">// Create a TalonSRX with device ID 1</span>
-</span><span id="line-5"><span class="n">WPI_TalonSRX</span><span class="w"> </span><span class="n">motor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WPI_TalonSRX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="c1">// Set the motor to run at 50% power</span>
-</span><span id="line-8"><span class="n">motor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">ControlMode</span><span class="p">.</span><span class="na">PercentOutput</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
-</span></code></pre></div>
-</div>
-</section>
-<section id="common-applications">
-<h2>Common Applications<a class="headerlink" href="#common-applications" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#common-applications'"><span>#</span></a></h2>
-<ul class="simple">
-<li><p>Drive train motors</p></li>
-<li><p>Arm mechanisms</p></li>
-<li><p>Elevator systems</p></li>
-<li><p>Intake mechanisms</p></li>
-</ul>
-</section>
-</section>
-</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
-<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
-<ul>
-<li><a :data-current="activeSection === '#features'" class="reference internal" href="#features">Features</a></li>
-<li><a :data-current="activeSection === '#setup-and-configuration'" class="reference internal" href="#setup-and-configuration">Setup and Configuration</a></li>
-<li><a :data-current="activeSection === '#common-applications'" class="reference internal" href="#common-applications">Common Applications</a></li>
-</ul>
-</div>
-</aside>
+</div></div>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
