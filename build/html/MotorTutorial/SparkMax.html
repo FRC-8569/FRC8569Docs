@@ -13,12 +13,11 @@
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
-<link href="../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="TalonSRX.html" rel="next" title="TalonSRX Motor Controller Introduction"/>
-<link href="Kraken.html" rel="prev" title="Kraken Motor Introduction"/>
+<link href="Kraken.html" rel="prev" title="Kraken Motor"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -80,9 +79,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Motor Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
@@ -121,10 +120,14 @@
 <h2>Motor Definition<a class="headerlink" href="#motor-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#motor-definition'"><span>#</span></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Every configuration is not required, you can config all the settings you need</p>
+<p>Every configurations is not required, you can config all the settings you need
+(It will use the default or previous settings if not set)</p>
 </div>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">NEO</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Motor itself</span>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>VendorDeps: REVLib</p>
+</div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="n">SparkMax</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span><span class="w"> </span><span class="c1">//Motor itself</span>
 </span><span id="line-2"><span class="kd">public</span><span class="w"> </span><span class="n">SparkMaxConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"> </span><span class="c1">//motor config</span>
 </span><span id="line-3"><span class="kd">public</span><span class="w"> </span><span class="n">RelativeEncoder</span><span class="w"> </span><span class="n">encoder</span><span class="p">;</span><span class="w"> </span><span class="c1">//built in encoder</span>
 </span><span id="line-4">
@@ -141,7 +144,6 @@
 </span><span id="line-15"><span class="p">}</span>
 </span></code></pre></div>
 </div>
-</div></div>
 </section>
 <section id="the-differences-between-kbrake-and-kcoast">
 <span id="brakevscoast"></span><h2>The Differences between kBrake and kCoast<a class="headerlink" href="#the-differences-between-kbrake-and-kcoast" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#the-differences-between-kbrake-and-kcoast'"><span>#</span></a></h2>
@@ -203,6 +205,5 @@
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 <script src="../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../_static/tabs.js?v=3030b3cb"></script>
 </body>
 </html>

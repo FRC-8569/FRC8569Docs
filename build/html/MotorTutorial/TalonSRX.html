@@ -78,10 +78,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../DriveSystems/swerve.html">Swerve Chassis Tutorial</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Motor Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor Introduction</a></li>
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
@@ -106,17 +106,45 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Motor Controller Tutorial</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Controller Tutorial</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">TalonSRX Motor Controller Introduction</span>
 </nav>
 <div id="content" role="main">
 <section id="talonsrx-motor-controller-introduction">
 <h1>TalonSRX Motor Controller Introduction<a class="headerlink" href="#talonsrx-motor-controller-introduction" title="Link to this heading"><span>#</span></a></h1>
-<blockquote>
-<div><p>heelo</p>
-</div></blockquote>
+<p>TalonSRX motor controller is designed for brushed motor like CIM or mini-CIM which looks like</p>
+<a class="reference internal image-reference" href="https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/1/217-8080.jpg"><img alt="TalonSRX motor controller" src="https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/1/217-8080.jpg" style="width: 60%;"/>
+</a>
+<section id="motor-definition">
+<h2>Motor Definition<a class="headerlink" href="#motor-definition" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#motor-definition'"><span>#</span></a></h2>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="n">TalonSRX</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span>
+</span><span id="line-2"><span class="c1">//You can configure more settings by using the TalonSRXConfiguration class</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="kd">public</span><span class="w"> </span><span class="nf">something</span><span class="p">(){</span>
+</span><span id="line-5"><span class="w">   </span><span class="n">motor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRX</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="w">   </span><span class="n">motor</span><span class="p">.</span><span class="na">configAllSettings</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TalonSRXConfiguration</span><span class="p">());</span><span class="c1">//restore settings</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="w">   </span><span class="n">motor</span><span class="p">.</span><span class="na">setInverted</span><span class="p">(</span><span class="n">InvertType</span><span class="p">.</span><span class="na">None</span><span class="p">);</span><span class="w"> </span><span class="c1">//set inverted, you can check out the InvertType class for more settings</span>
+</span><span id="line-10"><span class="w">   </span><span class="n">motor</span><span class="p">.</span><span class="na">setNeutralMode</span><span class="p">(</span><span class="n">NeutralMode</span><span class="p">.</span><span class="na">Brake</span><span class="p">);</span>
+</span><span id="line-11"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<p>and you can drive the motor by this command</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="p">){</span>
+</span><span id="line-2"><span class="w">     </span><span class="n">motor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">TalonSRXControlMode</span><span class="p">.</span><span class="na">PercentOutput</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="p">);</span><span class="w"> </span><span class="c1">//you can checkout the TalonSRXControlMode to get the more information for driving motor methods.</span>
+</span><span id="line-3"><span class="p">}</span>
+</span></code></pre></div>
+</div>
 </section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#motor-definition'" class="reference internal" href="#motor-definition">Motor Definition</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">

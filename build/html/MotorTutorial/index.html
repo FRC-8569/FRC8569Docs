@@ -13,16 +13,16 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Motor and Motor Controller Tutorial | FRC8569  documentation</title>
-    <meta property="og:title" content="Motor and Motor Controller Tutorial | FRC8569  documentation" />
-    <meta name="twitter:title" content="Motor and Motor Controller Tutorial | FRC8569  documentation" />
+    <title>Motor and Controller Tutorial | FRC8569  documentation</title>
+    <meta property="og:title" content="Motor and Controller Tutorial | FRC8569  documentation" />
+    <meta name="twitter:title" content="Motor and Controller Tutorial | FRC8569  documentation" />
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
       <link rel="stylesheet" type="text/css" href="../_static/awesome-sphinx-design.css?v=15e0fffa" />
         <link rel="search" title="Search" href="../search.html" />
         <link rel="index" title="Index" href="../genindex.html" />
-          <link rel="next" title="CIM Motor Introduction" href="CIM.html" />
+          <link rel="next" title="CIM Motor" href="CIM.html" />
           <link rel="prev" title="Swerve Chassis Tutorial" href="../DriveSystems/swerve.html" />
 
     <script>
@@ -112,10 +112,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../DriveSystems/swerve.html">Swerve Chassis Tutorial</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Motor and Motor Controller Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Motor and Controller Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
@@ -155,24 +155,24 @@
   </a>
   
 <div class="mr-1">/</div><span aria-current="page"
-        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Motor and Motor Controller Tutorial</span>
+        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Motor and Controller Tutorial</span>
 </nav>
 
     <div id="content" role="main">
-      <section id="motor-and-motor-controller-tutorial">
-<h1>Motor and Motor Controller Tutorial<a class="headerlink" href="#motor-and-motor-controller-tutorial" title="Link to this heading"><span>#</span></a></h1>
+      <section id="motor-and-controller-tutorial">
+<h1>Motor and Controller Tutorial<a class="headerlink" href="#motor-and-controller-tutorial" title="Link to this heading"><span>#</span></a></h1>
 <p>In this tutorial, you’ll know the most popular motors and their controllers</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Motor and Motor Controllers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="CIM.html">CIM Motor Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="NEO.html">NEO Motor Tutorial</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NEO.html">NEO Motor</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="NEO.html#neo-v1-1">NEO v1.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="NEO.html#neo-vortex">NEO Vortex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="NEO.html#neo-550">NEO 550</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Kraken.html">Kraken Motor Introduction</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Kraken.html">Kraken Motor</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Kraken.html#kraken-x60">Kraken X60</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Kraken.html#kraken-x44">Kraken X44</a></li>
 </ul>
@@ -182,8 +182,14 @@
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html#the-differences-between-kbrake-and-kcoast">The Differences between kBrake and kCoast</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TalonSRX.html#motor-definition">Motor Definition</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TalonFX.html#motor-definition">Motor Definition</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>

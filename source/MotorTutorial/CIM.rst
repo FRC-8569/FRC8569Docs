@@ -1,5 +1,5 @@
-CIM Motor Introduction
-=======================
+CIM Motor
+=========
 
 CIM motor has the lowest price but offers not bad performance
 

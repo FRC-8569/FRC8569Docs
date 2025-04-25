@@ -14,28 +14,29 @@ Motor Definition
 ++++++++++++++++
 
 .. note:: 
-    Every configuration is not required, you can config all the settings you need
+    Every configurations is not required, you can config all the settings you need
+    (It will use the default or previous settings if not set)
 
+.. attention:: 
+    VendorDeps: REVLib
 
-.. tabs::
-    .. tab:: NEO
-        .. code-block:: java
+.. code-block:: java
             
-            public SparkMax motor; //Motor itself
-            public SparkMaxConfig config; //motor config
-            public RelativeEncoder encoder; //built in encoder
+    public SparkMax motor; //Motor itself
+    public SparkMaxConfig config; //motor config
+    public RelativeEncoder encoder; //built in encoder
 
-            pubic void configMotor(){
-                motor = new SparkMax(0, MotorType.kBrushless);//you can configure the motor type bewteen kBrushless and kBrushed
-                config = new SparkMaxConfig();
+    pubic void configMotor(){
+        motor = new SparkMax(0, MotorType.kBrushless);//you can configure the motor type bewteen kBrushless and kBrushed
+        config = new SparkMaxConfig();
 
-                config
-                    .idleMode(IdleMode.kBrake) //The motor mode, kBrake will stop motor immediately otherwise will spin untill stop naturally
-                    .inverted(false) //configure if the motor inverted
-                    .follow(0); //you can set the motor followed to another motor, usually used in 4 motor KOP chassis
+        config
+            .idleMode(IdleMode.kBrake) //The motor mode, kBrake will stop motor immediately otherwise will spin untill stop naturally
+            .inverted(false) //configure if the motor inverted
+            .follow(0); //you can set the motor followed to another motor, usually used in 4 motor KOP chassis
 
-                motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); //apply settings to the motor
-            }
+        motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); //apply settings to the motor
+    }
 
 .. _BrakevsCoast:
 

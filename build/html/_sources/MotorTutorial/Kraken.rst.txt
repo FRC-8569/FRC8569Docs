@@ -1,5 +1,5 @@
-Kraken Motor Introduction
-==========================
+Kraken Motor
+============
 
 The Kraken motor is one of the most powerful motors in frc games, it is common in most top-tier teams
 

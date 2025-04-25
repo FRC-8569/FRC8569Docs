@@ -1,5 +1,5 @@
-NEO Motor Tutorial
-===================
+NEO Motor
+=========
 
 NEO motor is the most common motors for FRC games.
 
