@@ -1,2 +1,0 @@
-SparkMax Motor Controller Introduction
-=======================================

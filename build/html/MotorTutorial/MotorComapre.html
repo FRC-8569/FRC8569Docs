@@ -7,17 +7,18 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>NEO Motor Tutorial | FRC8569  documentation</title>
-<meta content="NEO Motor Tutorial | FRC8569  documentation" property="og:title"/>
-<meta content="NEO Motor Tutorial | FRC8569  documentation" name="twitter:title"/>
+<title>Motor Comparation | FRC8569  documentation</title>
+<meta content="Motor Comparation | FRC8569  documentation" property="og:title"/>
+<meta content="Motor Comparation | FRC8569  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="../_static/style.css?v=566b5939" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="Kraken.html" rel="next" title="Kraken Motor Introduction"/>
-<link href="CIM.html" rel="prev" title="CIM Motor Introduction"/>
+<link href="SparkMax.html" rel="next" title="SparkMax Motor Controller Introduction"/>
+<link href="Kraken.html" rel="prev" title="Kraken Motor"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -78,13 +79,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../DriveSystems/swerve.html">Swerve Chassis Tutorial</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Motor Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor Introduction</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">NEO Motor Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor Introduction</a></li>
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Motor Comparation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../SoftwareSystem/index.html">Programming System Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/timed.html">Timed Robot Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/command.html">Command Based Programming</a></li>
 </ul>
 </li>
 </ul>
@@ -106,13 +113,106 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Motor Controller Tutorial</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">NEO Motor Tutorial</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Controller Tutorial</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Motor Comparation</span>
 </nav>
 <div id="content" role="main">
-<section id="neo-motor-tutorial">
-<h1>NEO Motor Tutorial<a class="headerlink" href="#neo-motor-tutorial" title="Link to this heading"><span>#</span></a></h1>
-<p>NEO motor is the most common motors for FRC games.</p>
+<section id="motor-comparation">
+<h1>Motor Comparation<a class="headerlink" href="#motor-comparation" title="Link to this heading"><span>#</span></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>AndyMark</p></th>
+<th class="head" colspan="3"><p>NEO Series(REV)</p></th>
+<th class="head" colspan="3"><p>Kraken Series(CTRE)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Motors</p></td>
+<td><p>X</p></td>
+<td><p>CIM</p></td>
+<td><p>NEO v1.1</p></td>
+<td><p>NEO Vortex</p></td>
+<td><p>NEO 550</p></td>
+<td><p>Kraken X60</p></td>
+<td><p>Kraken X44</p></td>
+<td><p>Minion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Free Speed</p></td>
+<td><p>RPM</p></td>
+<td><p>5330</p></td>
+<td><p>5676</p></td>
+<td><p>6784</p></td>
+<td><p>11000</p></td>
+<td><p>6000</p></td>
+<td><p>7530</p></td>
+<td><p>7200</p></td>
+</tr>
+<tr class="row-even"><td><p>Stall Torque</p></td>
+<td><p>Nm</p></td>
+<td><p>2.41</p></td>
+<td><p>2.6</p></td>
+<td><p>3.6</p></td>
+<td><p>0.97</p></td>
+<td><p>7.09</p></td>
+<td><p>4.05</p></td>
+<td><p>3.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Motor Kv</p></td>
+<td><p>RPM/s</p></td>
+<td><p>453.5</p></td>
+<td><p>473</p></td>
+<td><p>565</p></td>
+<td><p>917</p></td>
+<td><p>502.1</p></td>
+<td><p>630.7</p></td>
+<td><p>627.6</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="mailto:Power%4040A">Power<span>@</span>40A</a></p></td>
+<td><p>Watt</p></td>
+<td><p>272</p></td>
+<td><p>380</p></td>
+<td><p>375</p></td>
+<td><p>300</p></td>
+<td><p>413</p></td>
+<td><p>397</p></td>
+<td><p>352</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wiring</p></td>
+<td><p>AWG</p></td>
+<td><p>12</p></td>
+<td colspan="3"><p>12</p></td>
+<td colspan="3"><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>Controller</p></td>
+<td></td>
+<td><p>Brushed</p></td>
+<td><p>SparkMax</p></td>
+<td><p>SparkFlex</p></td>
+<td><p>SparkMax</p></td>
+<td><p>TalonFX*</p></td>
+<td><p>TalonFX*</p></td>
+<td><p>TalonSFX</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>check out the references:
+All the data from the offical website otherwise from <a class="reference external" href="https://www.reca.lc/motors">this</a> website.
+If offical and recalc data are different, we choose the offical data as primary.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Checkout the <a class="reference external" href="https://store.ctr-electronics.com/products/minion-brushless-motor?srsltid=AfmBOopFTXlJOvLPhF-Z9MAIIIfcBiVRCGFxSV1XuMA_CyvH3oQP10ky">Kraken Minion</a> motor</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The motor controller is built in the motor.</p></li>
+</ul>
+</div>
 </section>
 </div></div>
 </main>

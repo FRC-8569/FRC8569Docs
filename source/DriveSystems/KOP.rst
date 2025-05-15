@@ -162,26 +162,27 @@ Software Installation:
                 public TalonSRX LeftMotor, RightMotor; //Define two motors, you can define four if you needed
                 
                 public CIMChassis(){
-                        //Initialize the items we just defined
-                        LeftMotor = new TalonSRX(ChassisConstants.LeftMotorID);
-                        RightMotor = new TalonSRX(ChassisConstants.RightMotorID);
+                    //Initialize the items we just defined
+                    LeftMotor = new TalonSRX(ChassisConstants.LeftMotorID);
+                    RightMotor = new TalonSRX(ChassisConstants.RightMotorID);
 
-                        //reset the motor configuration for the less bugs
-                        LeftMotor.configAllSettings(new TalonSRXConfiguration());
-                        RightMotor.configAllSettings(new TalonSRXConfiguration());
+                    //reset the motor configuration for the less bugs
+                    LeftMotor.configAllSettings(new TalonSRXConfiguration());
+                    RightMotor.configAllSettings(new TalonSRXConfiguration());
 
 
-                        LeftMotor.setNeutralMode(NeutralMode.Brake);
-                        LeftMotor.setInverted(InvertType.None);
+                    LeftMotor.setNeutralMode(NeutralMode.Brake);
+                    LeftMotor.setInverted(InvertType.None);
 
-                        RightMotor.setNeutralMode(NeutralMode.Brake);
-                        RightMotor.setInverted(InvertType.InvertMotorOutput);
-                    }
+                    RightMotor.setNeutralMode(NeutralMode.Brake);
+                    RightMotor.setInverted(InvertType.InvertMotorOutput);
+                }
 
-                    public void drive(double speed, double rotation){
-                        LeftMotor.set(ControlMode.PercentOutput, speed+rotation);
-                        RightMotor.set(ControlMode.PercentOutput, speed-rotation);
-                    }
+                public void drive(double speed, double rotation){
+                    LeftMotor.set(ControlMode.PercentOutput, speed+rotation);
+                    RightMotor.set(ControlMode.PercentOutput, speed-rotation);
+                }
+            }
             }
 
 
@@ -216,4 +217,6 @@ Software Installation:
                         LeftMotor.set(speed+rotation);
                         RightMotor.set(speed-rotation);
                     }
-            }
+                }
+
+

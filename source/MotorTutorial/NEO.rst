@@ -69,7 +69,7 @@ Basic Information:
 
     Peak Power: 279 W
 
-    Wiring:12 AWG
+    Wiring:14 AWG
 
 .. note:: 
     Check out the references:

@@ -31,3 +31,6 @@ and you can drive the motor by this command
    public void drive(double speed){
         motor.set(TalonSRXControlMode.PercentOutput, speed); //you can checkout the TalonSRXControlMode to get the more information for driving motor methods.
    }
+
+.. note:: 
+   You can check out `this <SparkMax.html#the-differences-between-kbrake-and-kcoast>`_ table if you want to know what's the differences between Brake and Coast.

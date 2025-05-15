@@ -43,3 +43,6 @@ and you can drive the motor by using these two method
    pubic void DutyCycleDrive(double speed){
       motor.setControl(driving.withOutput(speed))
    }
+
+.. note:: 
+   You can check out `this <SparkMax.html#the-differences-between-kbrake-and-kcoast>`_ table if you want to know what's the differences between Brake and Coast.

@@ -1,2 +1,0 @@
-TalonFX Motor Controller Introduction
-======================================

@@ -32,3 +32,6 @@ html_theme = 'sphinxawesome_theme'
 pygments_style = 'xcode'
 
 html_static_path = ['_static']
+
+def setup(app):
+    app.add_css_file('style.css')

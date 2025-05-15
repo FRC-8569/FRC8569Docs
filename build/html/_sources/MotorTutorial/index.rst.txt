@@ -10,6 +10,7 @@ In this tutorial, you'll know the most popular motors and their controllers
     CIM
     NEO
     Kraken
+    MotorComapre
     SparkMax
     TalonSRX
     TalonFX

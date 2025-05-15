@@ -12,12 +12,13 @@
 <meta content="CIM Motor | FRC8569  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="../_static/style.css?v=566b5939" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="NEO.html" rel="next" title="NEO Motor"/>
-<link href="index.html" rel="prev" title="Motor and Motor Controller Tutorial"/>
+<link href="index.html" rel="prev" title="Motor and Controller Tutorial"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -78,13 +79,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../DriveSystems/swerve.html">Swerve Chassis Tutorial</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Motor Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Motor and Controller Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">CIM Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MotorComapre.html">Motor Comparation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonSRX.html">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../SoftwareSystem/index.html">Programming System Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/timed.html">Timed Robot Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/command.html">Command Based Programming</a></li>
 </ul>
 </li>
 </ul>
@@ -106,7 +113,7 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Motor Controller Tutorial</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Motor and Controller Tutorial</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">CIM Motor</span>
 </nav>
 <div id="content" role="main">
@@ -115,6 +122,8 @@
 <p>CIM motor has the lowest price but offers not bad performance</p>
 <p>CIM motor image:</p>
 <img alt="CIM motor" src="https://cdn.andymark.com/product_images/2-5-in-cim-motor/am-0255/5d2cae3f9709d77caa11506b/zoom.jpg?c=1740086825"/>
+<section id="regular-cim-motor">
+<h2>Regular CIM Motor<a class="headerlink" href="#regular-cim-motor" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#regular-cim-motor'"><span>#</span></a></h2>
 <dl>
 <dt>Basic Informations:</dt><dd><p>Type: Brushed Motor</p>
 <p>Free Speed: 5310 RPM</p>
@@ -122,13 +131,23 @@
 <p>Maximum Power: 337W</p>
 <p>AndyMark No: AM-0255</p>
 </dd>
-<dt>Available Motor Controller:</dt><dd><p>TalonSRX</p>
-<p>VictorSPX</p>
-<p>SparkMax</p>
-</dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+</section>
+<section id="mini-cim">
+<h2>Mini CIM<a class="headerlink" href="#mini-cim" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#mini-cim'"><span>#</span></a></h2>
+<p>It provides 2/3 performance of regular CIM motor</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Currently unavailable</p>
+</div>
+</section>
+<section id="available-motor-controllers">
+<h2>Available Motor Controllers<a class="headerlink" href="#available-motor-controllers" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#available-motor-controllers'"><span>#</span></a></h2>
+<p><a class="reference external" href="TalonSRX.html">TalonSRX</a></p>
+<p><a class="reference external" href="SparkMax.html">SparkMax</a></p>
+<p>VictorSPX</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>This motor is replaced by <a class="reference external" href="NEO.html">NEO</a></p>
 </div>
 <div class="admonition note">
@@ -137,7 +156,16 @@
 <a class="reference external" href="https://www.andymark.com/products/2-5-in-cim-motor">CIM</a></p>
 </div>
 </section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#regular-cim-motor'" class="reference internal" href="#regular-cim-motor">Regular CIM Motor</a></li>
+<li><a :data-current="activeSection === '#mini-cim'" class="reference internal" href="#mini-cim">Mini CIM</a></li>
+<li><a :data-current="activeSection === '#available-motor-controllers'" class="reference internal" href="#available-motor-controllers">Available Motor Controllers</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">

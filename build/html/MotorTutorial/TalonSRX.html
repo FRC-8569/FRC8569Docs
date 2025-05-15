@@ -12,6 +12,7 @@
 <meta content="TalonSRX Motor Controller Introduction | FRC8569  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d8a2add5" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="../_static/style.css?v=566b5939" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
 <link href="../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
@@ -82,9 +83,15 @@
 <li class="toctree-l2"><a class="reference internal" href="CIM.html">CIM Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="NEO.html">NEO Motor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Kraken.html">Kraken Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MotorComapre.html">Motor Comparation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SparkMax.html">SparkMax Motor Controller Introduction</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TalonSRX Motor Controller Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TalonFX.html">TalonFX Motor Controller Introduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../SoftwareSystem/index.html">Programming System Tutorial<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/timed.html">Timed Robot Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareSystem/command.html">Command Based Programming</a></li>
 </ul>
 </li>
 </ul>
@@ -135,6 +142,10 @@
 </span><span id="line-2"><span class="w">     </span><span class="n">motor</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">TalonSRXControlMode</span><span class="p">.</span><span class="na">PercentOutput</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="p">);</span><span class="w"> </span><span class="c1">//you can checkout the TalonSRXControlMode to get the more information for driving motor methods.</span>
 </span><span id="line-3"><span class="p">}</span>
 </span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can check out <a class="reference external" href="SparkMax.html#the-differences-between-kbrake-and-kcoast">this</a> table if you want to know what’s the differences between Brake and Coast.</p>
 </div>
 </section>
 </section>
